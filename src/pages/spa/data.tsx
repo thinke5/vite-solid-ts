@@ -1,6 +1,5 @@
 import { createAsync, useNavigate, useParams, useSearchParams } from '@solidjs/router';
-import { useRequest } from 'alova';
-import { Show, type Component } from 'solid-js';
+import { Show, type Component, createResource, createEffect, ErrorBoundary } from 'solid-js';
 import { BASEURL } from '../../config';
 import { testFetch } from '../../request/test';
 import { getData } from './getData';
@@ -12,8 +11,11 @@ export const Data: Component<DataProps> = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const param = useParams();
   const navigate = useNavigate();
-  const { data, loading, send } = useRequest(testFetch);
+  const [data, { refetch: send }] = createResource(testFetch);
 
+  createEffect(() => {
+    console.log(data.loading, data.state, data.name, data.error);
+  });
   return (
     <div class="flex-1 bg-gray-1">
       <div class="w-full flex flex-wrap f-s/s gap-12 p-24">
@@ -48,16 +50,22 @@ export const Data: Component<DataProps> = () => {
         <div class="shadow-md b-#eee p-12 rd-6 min-w-300 min-h-200 bg-white">
           <button onClick={[send, undefined]}>reload</button>
           <p>Fetch = </p>
-          <pre>
-            {JSON.stringify(
-              {
-                loading: loading(),
-                data: data(),
-              },
-              null,
-              2
-            )}
-          </pre>
+          <ErrorBoundary
+            fallback={
+              <pre class="max-w-350 max-h-400 overflow-auto">{JSON.stringify({ err: data.error }, null, 2)}</pre>
+            }>
+            <pre class="max-w-350 max-h-400 overflow-auto">
+              {JSON.stringify(
+                {
+                  loading: data.loading,
+                  data: data(),
+                  error: data.error,
+                },
+                null,
+                2
+              )}
+            </pre>
+          </ErrorBoundary>
         </div>
       </div>
     </div>

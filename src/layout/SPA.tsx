@@ -5,7 +5,7 @@
 import { HashRouter, Navigate, RouteDefinition } from '@solidjs/router';
 import { lazy } from 'solid-js';
 import { render } from 'solid-js/web';
-import { getData } from '../pages/spa/getData';
+// import { getData } from '../pages/spa/getData';
 import Page404 from './404';
 
 const routes: RouteDefinition[] = [
@@ -24,7 +24,7 @@ const routes: RouteDefinition[] = [
       {
         path: ['/data', '/data/:num'],
         component: lazy(() => import('../pages/spa/data')),
-        load: getData,
+        // load: getData,
       },
     ],
   },

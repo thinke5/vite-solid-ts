@@ -1,0 +1,14 @@
+{
+  "code": 0,
+  "data": {
+    "num": 123,
+    "str": "xxxx",
+    "arr": [123, 5443, 76],
+    "obj": {
+      "a": 1
+    },
+    "bol": true,
+    "nil": null
+  },
+  "message": ""
+}

@@ -1,3 +1,13 @@
-import { AJAX } from '../utils/ajax';
+import { POST } from '../utils/ajax';
 
-export const testFetch = () => AJAX.Post('/voice_change/h5/voice', { h5_code: 'xxx' }, {});
+export const testFetch = () => POST<iX>('/data.json', { h5_code: 'xxx' });
+type iX = {
+  num: 123;
+  str: 'xxxx';
+  arr: [123, 5443, 76];
+  obj: {
+    a: 1;
+  };
+  bol: true;
+  nil: null;
+};
