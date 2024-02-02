@@ -11,7 +11,7 @@ export const getData = cache(async () => {
 
 export const Data = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  console.log('get data ok');
+  // console.log('get data ok');
 
   return {
     name: 'dataName',

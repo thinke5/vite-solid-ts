@@ -5,7 +5,7 @@ export const DataPage: Component<{
   children?: JSX.Element;
 }> = (props) => {
   return (
-    <div class="min-h-100vh f-c/s flex-col">
+    <div class="min-h-100vh f-c/s flex-col bg-gray-1">
       <nav class="w-full f-c/c gap-24 bg-gray-7">
         <A href="" end class="py-20" activeClass="text-blue" inactiveClass="text-white">
           Home

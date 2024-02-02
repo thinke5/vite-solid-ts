@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@solidjs/router": "^0.10.10",
-    "@tencent/tmga-h5-sdk": "^0.0.5",
+    "@tencent/tmga-h5-sdk": "^0.0.6",
     "axios": "^1.6.7",
     "js-base64": "^3.7.6",
     "js-cookie": "^3.0.5",

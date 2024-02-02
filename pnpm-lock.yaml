@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.10.10
     version: 0.10.10(solid-js@1.8.12)
   '@tencent/tmga-h5-sdk':
-    specifier: ^0.0.5
-    version: 0.0.5(js-cookie@3.0.5)
+    specifier: ^0.0.6
+    version: 0.0.6(js-cookie@3.0.5)
   axios:
     specifier: ^1.6.7
     version: 1.6.7
@@ -874,8 +874,8 @@ packages:
       web-streams-polyfill: 3.3.2
     dev: true
 
-  /@tencent/tmga-h5-sdk@0.0.5(js-cookie@3.0.5):
-    resolution: {integrity: sha512-C0liZzKD3ZY2KAWo2yy3MtI7DCBS41SHxa4zcHREa2/I5HwcTz2oW8Qb6CLngLdqLqD4+Dzq8mjch4yzfPhzMQ==, tarball: https://mirrors.tencent.com/npm/@tencent/tmga-h5-sdk/-/@tencent/tmga-h5-sdk-0.0.5.tgz}
+  /@tencent/tmga-h5-sdk@0.0.6(js-cookie@3.0.5):
+    resolution: {integrity: sha512-mwyDL+TUg0KyGQjmSOxnWPCarchpIzhnLM/JOExfj98BkUl27rQLqqv44d8Za4fzxHz3a7qsbM2KGJ2DKdqWEg==, tarball: https://mirrors.tencent.com/npm/@tencent/tmga-h5-sdk/-/@tencent/tmga-h5-sdk-0.0.6.tgz}
     peerDependencies:
       js-cookie: ^3.0.5
     dependencies:

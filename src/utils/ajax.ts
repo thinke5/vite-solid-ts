@@ -1,4 +1,4 @@
-import { getAuthParam } from '@tencent/tmga-h5-sdk';
+import { getAuthParamWithCache } from '@tencent/tmga-h5-sdk';
 import axios, { AxiosRequestConfig, isAxiosError } from 'axios';
 import { encode } from 'js-base64';
 import { isObject, isNil } from 'lodash';
@@ -9,14 +9,14 @@ const iaxios = axios.create({
 });
 // 添加 公共请求参数
 iaxios.interceptors.request.use(async (reqConfig) => {
-  const authParam = await getAuthParam();
+  const authParam = await getAuthParamWithCache();
   if (typeof reqConfig.data === 'object') {
     reqConfig.data = { ...authParam.bodyParam, ...reqConfig.data };
   }
   reqConfig.headers['tencent-tmga-pvpdatawebsvr'] = encode(JSON.stringify(authParam.headerParam));
   return reqConfig;
 });
-// 优化 返回的数据
+// 优化 返回的数据 --要在错误处理前
 iaxios.interceptors.response.use(async (resInfo) => {
   const resData = resInfo.data;
   // data 为对象时，判断code
@@ -52,7 +52,7 @@ iaxios.interceptors.response.use(undefined, async (err) => {
 // 错误自动弹窗 -- 自定义
 // iaxios.interceptors.response.use(undefined, async (err) => {
 //   if (err.code > 0) {
-//     alert(`${err.message}【${err.code}】`);
+//     // alert(`${err.message}【${err.code}】`);
 //   }
 //   // 继续向外抛出错误
 //   throw err;
