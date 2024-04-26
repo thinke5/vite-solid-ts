@@ -1,5 +1,5 @@
-import { defineConfig, presetUno, transformerVariantGroup } from 'unocss';
-import wmlPreset from '@tencent/unocss-wml-preset';
+import { defineConfig, presetUno, transformerVariantGroup } from 'unocss'
+import wmlPreset from '@thinke/unocss-wml-preset'
 
 export default defineConfig({
   presets: [
@@ -9,4 +9,4 @@ export default defineConfig({
   transformers: [
     transformerVariantGroup(), // text-(16 red)
   ],
-});
+})

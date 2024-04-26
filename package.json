@@ -1,9 +1,9 @@
 {
   "name": "vite-solid-ts",
-  "description": "description",
-  "private": true,
-  "version": "1.0.0",
   "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "description",
   "scripts": {
     "dev:rdm": "vite --mode rdm",
     "build:rdm": "vite build --mode rdm",
@@ -13,24 +13,29 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@solidjs/router": "^0.10.10",
-    "@tencent/tmga-h5-sdk": "^0.0.6",
-    "axios": "^1.6.7",
-    "js-base64": "^3.7.6",
+    "@solidjs/router": "^0.13.2",
+    "@thinke/toast": "^1.0.1",
+    "axios": "^1.6.8",
+    "js-base64": "^3.7.7",
     "js-cookie": "^3.0.5",
+    "ky": "^1.2.4",
     "lodash": "npm:lodash-es@^4.17.21",
-    "solid-js": "^1.8.12"
+    "solid-js": "^1.8.17"
   },
   "devDependencies": {
-    "@tencent/unocss-wml-preset": "^0.1.6",
+    "@antfu/eslint-config": "^2.15.0",
+    "@thinke/unocss-wml-preset": "^0.1.11",
     "@types/js-cookie": "^3.0.6",
-    "@types/lodash": "^4.14.202",
+    "@types/lodash": "^4.17.0",
+    "@unocss/eslint-plugin": "^0.59.4",
+    "@vitejs/plugin-legacy": "^5.3.2",
+    "eslint": "^9.1.1",
+    "eslint-plugin-format": "^0.1.1",
     "less": "^4.2.0",
     "rollup-plugin-visualizer": "^5.12.0",
-    "typescript": "^5.3.3",
-    "unocss": "^0.58.4",
-    "unplugin-imagemin": "0.5.15",
-    "vite": "^5.0.12",
-    "vite-plugin-solid": "^2.9.1"
+    "typescript": "^5.4.5",
+    "unocss": "^0.59.4",
+    "vite": "^5.2.10",
+    "vite-plugin-solid": "^2.10.2"
   }
 }

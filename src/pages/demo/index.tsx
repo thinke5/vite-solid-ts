@@ -1,28 +1,17 @@
-import { createSignal } from 'solid-js';
-import solidLogo from '../../assets/solid.svg';
-import viteLogo from '/vite.svg';
-import './App.less';
+import { createSignal } from 'solid-js'
 
-function App() {
-  const [count, setCount] = createSignal(0);
-
+/** demo页面 */
+export default function Demo() {
+  const [count, setCount] = createSignal(0)
   return (
-    <div class="app">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={solidLogo} class="logo solid" alt="Solid logo" />
-        </a>
-      </div>
-
-      <h1 class="text-(32 #111)">Vite + Solid + TS</h1>
-      <div class="card flex gap-2">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count()}</button>
-      </div>
+    <div class="f-c/s flex-col p-24">
+      <img class="s-200" src="/vite.svg" />
+      <h1>vite + solid</h1>
+      <p>
+        conut=
+        {count()}
+      </p>
+      <button class="px-20 py-10" onClick={() => setCount(c => c + 1)}>count + 1</button>
     </div>
-  );
+  )
 }
-
-export default App;
