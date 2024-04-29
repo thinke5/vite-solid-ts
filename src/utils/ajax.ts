@@ -15,7 +15,7 @@ function getAuthParam() {
 
 const defKY = ky.create({
   prefixUrl: BASEURL,
-  retry: { limit: 1 },
+  retry: { limit: 0 },
   // throwHttpErrors: true,
   hooks: {
     // 请求发出前

@@ -14,6 +14,20 @@ export function Qrdecode() {
   return POST('v2/decode', { url: 'json' }).json<{ data: { url: string, text: string } }>()
 }
 
+let num = 0
+export function apiTest() {
+  return new Promise<{ a: number }>((resolve, reject) => {
+    console.log('apiTest run', num)
+    setTimeout(() => {
+      if (num > 3)
+        resolve({ a: num })
+      else
+        reject(new Error('eror'))
+    }, 600)
+
+    num += 1
+  })
+}
 export const routerBing = cache(() => bingBgByGet(), bingBgByGet.name)
 
 export interface BingRsq {

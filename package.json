@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@solidjs/router": "^0.13.2",
-    "@thinke/toast": "^1.0.1",
+    "@thinke/toast": "^1.2.1",
     "axios": "^1.6.8",
     "js-base64": "^3.7.7",
     "js-cookie": "^3.0.5",
@@ -23,7 +23,7 @@
     "solid-js": "^1.8.17"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.15.0",
+    "@antfu/eslint-config": "^2.16.0",
     "@thinke/unocss-wml-preset": "^0.1.11",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.0",
