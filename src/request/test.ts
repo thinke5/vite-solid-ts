@@ -15,18 +15,10 @@ export function Qrdecode() {
 }
 
 let num = 0
-export function apiTest() {
-  return new Promise<{ a: number }>((resolve, reject) => {
-    console.log('apiTest run', num)
-    setTimeout(() => {
-      if (num > 3)
-        resolve({ a: num })
-      else
-        reject(new Error('eror'))
-    }, 600)
-
-    num += 1
-  })
+export async function apiTest(param: { a: number }) {
+  await sleep(2000)
+  num += 1
+  return { param, num }
 }
 export const routerBing = cache(() => bingBgByGet(), bingBgByGet.name)
 
@@ -38,4 +30,8 @@ export interface BingRsq {
   height: number
   copyright: string
   copyrightlink: string
+}
+
+function sleep(timeout: number) {
+  return new Promise((resolve) => { setTimeout(resolve, timeout) })
 }

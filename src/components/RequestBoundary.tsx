@@ -1,5 +1,5 @@
-import type { Component, JSXElement, Resource, ResourceActions, ResourceFetcher } from 'solid-js'
-import { ErrorBoundary, Show, createEffect, createResource } from 'solid-js'
+import type { Component, JSXElement, Resource, ResourceActions, ResourceFetcher, ResourceOptions, ResourceSource } from 'solid-js'
+import { ErrorBoundary, Show, Suspense, createEffect, createResource, onMount } from 'solid-js'
 import { loading as iconLoading } from '@thinke/toast/icons'
 import { Dynamic } from 'solid-js/web'
 
@@ -7,13 +7,20 @@ export interface RequestBoundaryProps {
 
 }
 /** 请求边界，可自动处理请求的loading、error、reset */
-export default function RequestBoundary<T, R>(props: {
+export default function RequestBoundary<T, R, S = any>(props: {
   errorUI?: Component<ErrorUIProps>
-  loadingUI?: Component<LoadingUIProps>
-  request: ResourceFetcher<true, T, R>
+  loadingUI?: Component
+  request: ResourceFetcher<true, T, R> | [ResourceFetcher<true, T, R>] | [ ResourceSource<S>, ResourceFetcher<S, T, R> ] | [ ResourceSource<S>, ResourceFetcher<S, T, R>, ResourceOptions<NoInfer<T>, S>]
   children: (data: Ready<T>, actons: ResourceActions<T, R>) => JSXElement
 }): JSXElement {
-  const [data, actons] = createResource(props.request)
+  const [data, actons] = createResource(
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
+    ...(Array.isArray(props.request) ? props.request : [props.request]),
+  )
+  createEffect(() => {
+    console.log('-->', data.latest, data())
+  })
   return (
     <ErrorBoundary fallback={(err, reset) => (
       <Dynamic
@@ -26,12 +33,37 @@ export default function RequestBoundary<T, R>(props: {
       />
     )}
     >
-      <Dynamic resource={data} component={props.loadingUI ?? MaskLoadingUI}>
-        {props.children(data as any, actons as any)}
-      </Dynamic>
+      <Suspense fallback={<Dynamic component={props.loadingUI ?? MaskLoadingOnlyUI} />}>
+        <Show when={data.latest}>
+          {props.children(data as any, actons as any)}
+        </Show>
+      </Suspense>
     </ErrorBoundary>
   )
 }
+
+// #region 遮罩的加载中UI
+/** 遮罩的加载中UI */
+export function MaskLoadingOnlyUI() {
+  let $div: HTMLDivElement | null
+  onMount(() => {
+    if ($div) {
+      const pClientRect = $div.parentElement?.getBoundingClientRect()
+      if (pClientRect) {
+        $div.style.width = `${pClientRect.width}px`
+        $div.style.height = `${pClientRect.height}px`
+        $div.style.top = `${pClientRect.top}px`
+        $div.style.left = `${pClientRect.left}px`
+      }
+    }
+  })
+  return (
+    <div class="fixed z-98 f-c/c bg-gray/15 text-blue" ref={$div!}>
+      {SvgString2Element(iconLoading)}
+    </div>
+  )
+};
+// #endregion
 
 // #region 遮罩的加载中UI
 /** 遮罩的加载中UI */
@@ -51,7 +83,7 @@ export function MaskLoadingUI(props: LoadingUIProps) {
   return (
     <>
       <Show when={props.resource.loading}>
-        <div class="fixed z-98 f-c/c bg-gray/15 text-blue" ref={$div!}>
+        <div class="fixed z-98 f-c/c bg-gray/5 text-blue" ref={$div!}>
           {SvgString2Element(iconLoading)}
         </div>
       </Show>
@@ -66,6 +98,10 @@ export function MaskLoadingUI(props: LoadingUIProps) {
 // #region 默认的错误UI
 /** 默认的错误UI */
 export function DefaultErrorUI(props: ErrorUIProps) {
+  onMount(() => {
+    if (import.meta.env.DEV)
+      console.error(props.error)
+  })
   return (
     <div class="s-full f-c/c flex-col rd-.5em bg-red-1/40">
       <span class="text-.8em">发生错误！</span>
