@@ -4,3 +4,5 @@ export const BASEURL = import.meta.env.VITE_BASEURL
 export const isDEV = import.meta.env.DEV
 /** 是否rdm环境 */
 export const isRDM = import.meta.env.MODE === 'rdm'
+/** vite启动的时间 */
+export const BUILD_TIME = import.meta.env.VITE_BUILD_TIME

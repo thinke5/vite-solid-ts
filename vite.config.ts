@@ -1,12 +1,13 @@
 import unocss from 'unocss/vite'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
+import dayjs from 'dayjs'
 
 export default defineConfig(async ({ command }) => {
   const isBuild = command === 'build'
   return {
     base: !isBuild ? './' : '', // CDN
-
+    define: { 'import.meta.env.VITE_BUILD_TIME': JSON.stringify(dayjs().format('YYYY-MM-DD HH:mm:ss')) },
     plugins: [
       unocss(),
       solid(),

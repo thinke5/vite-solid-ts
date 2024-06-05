@@ -5,7 +5,7 @@ import JsonPre from '../../components/JsonPre'
 /** 请求demo */
 export default function FetchData() {
   return (
-    <div class="grid grid-cols-1 p-16">
+    <div class="grid grid-cols-1 p-3">
       <p class="text-blue-6">bing 每日壁纸;预期为 GET http:200 code:200</p>
       <BingBg />
 
@@ -32,7 +32,7 @@ export function Api404() {
     >
       <Show when={!data.loading} fallback="loading">
         <div>
-          <span class="">成功返回：</span>
+          <span>成功返回：</span>
           <JsonPre data={data()} />
         </div>
       </Show>
@@ -55,7 +55,7 @@ export function QrDecode() {
     >
       <Show when={!data.loading} fallback="loading">
         <div>
-          <span class="">成功返回：</span>
+          <span>成功返回：</span>
           <JsonPre data={data()} />
         </div>
       </Show>

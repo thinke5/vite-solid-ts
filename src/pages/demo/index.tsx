@@ -6,20 +6,20 @@ import { api404, apiTest, bingBgByGet } from '../../request/test'
 export default function Demo() {
   const [count, setCount] = createSignal(0)
   return (
-    <div class="f-c/s flex-col p-24">
-      <img class="s-200" src="/vite.svg" />
+    <div class="f-c/s flex-col p-24px">
+      <img class="s-200px" src="/vite.svg" />
       <h1>vite + solid</h1>
       <p>
         conut=
         {count()}
       </p>
-      <button class="px-20 py-10" onClick={() => setCount(c => c + 1)}>count + 1</button>
+      <button class="px-20px py-10px" onClick={() => setCount(c => c + 1)}>count + 1</button>
       <hr />
-      <div class="h-500 w-full overflow-auto">
+      <div class="h-500px w-full overflow-auto">
         <RequestBoundary request={bingBgByGet}>
           {(data, actons) => {
             return (
-              <div class="p-16">
+              <div class="p-2">
                 <p>
                   loading =
                   {JSON.stringify(data.loading)}

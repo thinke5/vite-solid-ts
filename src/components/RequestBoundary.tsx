@@ -18,9 +18,7 @@ export default function RequestBoundary<T, R, S = any>(props: {
     // @ts-expect-error
     ...(Array.isArray(props.request) ? props.request : [props.request]),
   )
-  createEffect(() => {
-    console.log('-->', data.latest, data())
-  })
+
   return (
     <ErrorBoundary fallback={(err, reset) => (
       <Dynamic
@@ -105,7 +103,7 @@ export function DefaultErrorUI(props: ErrorUIProps) {
   return (
     <div class="s-full f-c/c flex-col rd-.5em bg-red-1/40">
       <span class="text-.8em">发生错误！</span>
-      <button onClick={props.reset} class="mt-.75em cursor-pointer rd-4 b-none bg-blue-2 px-2em py.5em">重试</button>
+      <button onClick={props.reset} class="mt-.75em cursor-pointer rd-2 b-none bg-blue-2 px-2em py.5em">重试</button>
     </div>
   )
 };
