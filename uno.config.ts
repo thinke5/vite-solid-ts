@@ -7,6 +7,8 @@ export default defineConfig({
     wmlPreset({
       autoRem: {
         pcCompatible: true,
+        designWidth: 375,
+        expectFontSize: 16,
       },
     }), // 预设 & 移动rem兼容 && pc适配
   ],
