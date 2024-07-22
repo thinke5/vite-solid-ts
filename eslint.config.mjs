@@ -14,6 +14,8 @@ const config = antfu({
   },
   rules: {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'unused-imports/no-unused-vars': 'warn',
+    'style/jsx-one-expression-per-line': [0, { allow: 'non-jsx' }],
   },
 })
 

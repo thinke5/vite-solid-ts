@@ -5,7 +5,8 @@
 import type { RouteDefinition } from '@solidjs/router'
 import { HashRouter, Navigate } from '@solidjs/router'
 import { lazy } from 'solid-js'
-import { render } from 'solid-js/web'
+import { Dynamic, render } from 'solid-js/web'
+import { KeepAlive, KeepAliveProvider } from '../libs/keepAlive'
 import { routerBing } from '../request/test'
 import Page404 from './404'
 
@@ -20,11 +21,13 @@ const routes: RouteDefinition[] = [
     children: [
       {
         path: '/',
-        component: lazy(() => import('../pages/demo')),
+        // component: lazy(() => import('../pages/demo')),
+        component: () => (<KeepAlive id="spa/demo"><Dynamic component={lazy(() => import('../pages/demo'))} /></KeepAlive>),
       },
       {
         path: '/data',
         component: lazy(() => import('../pages/demo/fetchData')),
+        // component: () => (<KeepAlive id="spa/data"><Dynamic component={lazy(() => import('../pages/demo/fetchData'))} /></KeepAlive>),
       },
       {
         path: '/rd',
@@ -42,4 +45,8 @@ const routes: RouteDefinition[] = [
     component: Page404,
   },
 ]
-render(() => <HashRouter>{routes}</HashRouter>, document.getElementById('root')!)
+render(() => (
+  <KeepAliveProvider>
+    <HashRouter>{routes}</HashRouter>
+  </KeepAliveProvider>
+), document.getElementById('root')!)
