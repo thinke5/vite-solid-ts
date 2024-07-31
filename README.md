@@ -12,4 +12,4 @@ degit thinke5/vite-solid-ts
 - vite
 - solid
 - solid-router
-- alova
+- ky

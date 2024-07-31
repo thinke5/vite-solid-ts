@@ -6,7 +6,7 @@ import { api404, apiTest, bingBgByGet } from '../../request/test'
 export default function Demo() {
   const [count, setCount] = createSignal(0)
   return (
-    <div class="f-c/s flex-col p-24px">
+    <div class="p-24px f-c/s flex-col">
       <img class="s-200px" src="/vite.svg" />
       <h1>vite + solid</h1>
       <p>
@@ -16,7 +16,7 @@ export default function Demo() {
       <button class="px-20px py-10px" onClick={() => setCount(c => c + 1)}>count + 1</button>
       <hr />
       <div class="h-500px w-full overflow-auto">
-        <RequestBoundary request={bingBgByGet}>
+        <RequestBoundary request={[count, bingBgByGet]}>
           {(data, actons) => {
             return (
               <div class="p-2">

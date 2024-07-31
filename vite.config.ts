@@ -1,7 +1,15 @@
+/* eslint-disable ts/ban-ts-comment */
+// @ts-expect-error
+import { dirname, resolve } from 'node:path'
+// @ts-expect-error
+import { fileURLToPath } from 'node:url'
 import unocss from 'unocss/vite'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 import dayjs from 'dayjs'
+
+// @ts-expect-error
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig(async ({ command }) => {
   const isBuild = command === 'build'
@@ -16,6 +24,12 @@ export default defineConfig(async ({ command }) => {
     ],
     build: {
       target: ['chrome64', 'safari11.1'],
+    },
+    resolve: {
+      alias: {
+        '~': resolve(__dirname, './src'),
+        '@': resolve(__dirname, './src'),
+      },
     },
     server: {
       port: 8864,
