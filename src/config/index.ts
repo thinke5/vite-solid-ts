@@ -6,3 +6,5 @@ export const isDEV = import.meta.env.DEV
 export const isRDM = import.meta.env.MODE === 'rdm'
 /** vite启动的时间 */
 export const BUILD_TIME = import.meta.env.VITE_BUILD_TIME
+/** 版本号 */
+export const BUILD_V = import.meta.env.VITE_BUILD_V
