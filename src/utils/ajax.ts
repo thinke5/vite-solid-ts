@@ -5,8 +5,8 @@ import { BASEURL } from '../config'
 
 const myErrStatus = 499
 
-/** 模拟 获取鉴权数据 */
-function getAuthParam() {
+/** 获取鉴权数据 */
+async function getAuthParam(): Promise<Record<string, any>> {
   return Promise.resolve({
     openid: 'OPENID',
     token: 'TOKEN',
@@ -54,6 +54,7 @@ const defKY = ky.create({
           return new MyResponse(response, { code, message, data, traceId })
         }
       }
+      return response
     }],
     // 请求出错后
     beforeError: [
@@ -62,7 +63,7 @@ const defKY = ky.create({
         const error = _error as MyAjaxError
         const option = error.options as MyOptions
         if (option.showToast !== false)
-          toastError(`${error.code} ${error.message}`, 3000)
+          toastError(`${error.code} ${error.message}`, typeof option.showToast === 'number' ? option.showToast : 2500)
 
         return error
       },
@@ -120,8 +121,8 @@ interface MyResponseCause {
 }
 
 interface MyOptions extends Options {
-  /** 是否在请求错误时显示toast @default true */
-  showToast?: boolean
+  /** 是否在请求错误时显示toast,传入数字则为显示的时长 @default true */
+  showToast?: boolean | number
 }
 
 /**
