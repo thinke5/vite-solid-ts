@@ -9,6 +9,8 @@ import { defineConfig, loadEnv } from 'vite'
 import solid from 'vite-plugin-solid'
 import dayjs from 'dayjs'
 import { ssrx } from '@ssrx/vite/plugin'
+import tsconfigPaths from 'vite-tsconfig-paths'
+
 // @ts-expect-error
 // eslint-disable-next-line node/prefer-global/process
 const ENV = process.env
@@ -20,7 +22,7 @@ const isCI = Boolean(ENV.BK_CI_BUILD_NO)
 /** 构建版本号 */
 const build_version = ENV.BK_CI_BUILD_NO ? `${ENV.BK_CI_MAJOR_VERSION}.${ENV.BK_CI_MINOR_VERSION}.${ENV.BK_CI_FIX_VERSION}-${ENV.BK_CI_BUILD_NO}` : 'dev'
 
-const isSSR = ENV.BUILD_TYPE_VSR === 'ssr' // TODO: spa时为false
+const isSSR = ENV.BUILD_TYPE_VSR === 'ssr'
 
 export default defineConfig(async ({ command, mode, isSsrBuild }) => {
   const isBuild = command === 'build'
@@ -34,6 +36,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
       'import.meta.env.VITE__NOT_IN_SSRX': 'true',
     },
     plugins: [
+      tsconfigPaths(),
       unocss(),
       solid({ ssr: isSSR }),
       isSSR && ssrx({
@@ -44,9 +47,9 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
       // isBuild && (await import('vite-plugin-singlefile').then(p => p.viteSingleFile))({ useRecommendedBuildConfig: false, inlinePattern: ['assets/index-*.css'] }), // 将css提取到html内 - 按需开启 -ssr自带
       // isBuild && (await import('unplugin-inject-preload/vite').then(p => p.default))({ files: [{ outputMatch: /\.(m?js)$/, attributes: { crossorigin: true } }], injectTo: 'head' }), // 预加载，文件较多的可能负提升，使用时请详细测试 - 按需开启 -ssr自带
       // isBuild && isCI && vite_plugin_dns_prefetch(['https://xxxxx.com']), // DNS 加速 - 按需填写域名，一般只用填api的域名 如：['https://xxxxx.com']
-      // isBuild && !isCI && (await import('rollup-plugin-visualizer').then(p => p.visualizer))(), // 包体积分析 - 按需开启
+      isBuild && !isCI && (await import('rollup-plugin-visualizer').then(p => p.visualizer))(), // 包体积分析 - 按需开启
       // isBuild && (await import('@vitejs/plugin-legacy').then(p => p.default))({ targets: '>0.1%, chrome>=64,android>=64, ios>=11.1,not ie>0' }), // 低版本浏览器兼容 - 按需开启
-      mode === 'rdm' && isCI && vite_plugin_vconsole(), // vConsole - 按需开启
+      // mode === 'rdm' && isCI && vite_plugin_vconsole(), // vConsole - 按需开启
 
     ],
     build: {
@@ -54,10 +57,10 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
       minify: false,
     },
     resolve: {
-      alias: {
-        '~': resolve(__dirname, './src'),
-        '@': resolve(__dirname, './src'),
-      },
+      // alias: {
+      //   '~': resolve(__dirname, './src'),
+      //   '@': resolve(__dirname, './src'),
+      // },
     },
     server: {
       port: 8864,

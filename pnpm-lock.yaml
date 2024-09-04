@@ -11,6 +11,15 @@ dependencies:
   '@solidjs/router':
     specifier: ^0.14.3
     version: 0.14.3(solid-js@1.8.22)
+  '@tanstack/query-sync-storage-persister':
+    specifier: ^5.53.2
+    version: 5.53.2
+  '@tanstack/solid-query':
+    specifier: ^5.53.2
+    version: 5.53.2(solid-js@1.8.22)
+  '@tanstack/solid-query-persist-client':
+    specifier: ^5.53.2
+    version: 5.53.2(@tanstack/solid-query@5.53.2)(solid-js@1.8.22)
   '@thinke/toast':
     specifier: ^1.2.2
     version: 1.2.2
@@ -40,6 +49,9 @@ devDependencies:
   '@ssrx/vite':
     specifier: ^0.6.1
     version: 0.6.1(hono@4.5.10)(vite@5.4.2)
+  '@tanstack/solid-query-devtools':
+    specifier: ^5.54.0
+    version: 5.54.0(@tanstack/solid-query@5.53.2)(solid-js@1.8.22)
   '@thinke/unocss-wml-preset':
     specifier: ^2.0.5
     version: 2.0.5
@@ -88,6 +100,9 @@ devDependencies:
   vite-plugin-solid:
     specifier: ^2.10.2
     version: 2.10.2(solid-js@1.8.22)(vite@5.4.2)
+  vite-tsconfig-paths:
+    specifier: ^5.0.1
+    version: 5.0.1(typescript@5.5.4)(vite@5.4.2)
 
 packages:
 
@@ -2324,6 +2339,56 @@ packages:
       - typescript
     dev: true
 
+  /@tanstack/query-core@5.53.2:
+    resolution: {integrity: sha512-gCsABpRrYfLsmwcQ0JCE5I3LOQ9KYrDDSnseUDP3T7ukV8E7+lhlHDJS4Gegt1TSZCsxKhc1J5A7TkF5ePjDUQ==}
+
+  /@tanstack/query-devtools@5.54.0:
+    resolution: {integrity: sha512-B8Sa6mh7/4m2fyk2/YnUXeOZ1/us7G/C/i1It8YcCbieXc8vf1AdSYjR+mZIoJeKOKLqA741hZqfj8d4F1NCVg==}
+    dev: true
+
+  /@tanstack/query-persist-client-core@5.53.2:
+    resolution: {integrity: sha512-UjspxAb2+wSEu64rf6cwFXra9GXPHSoIEhRRrhYlKlVBv61Kxz1h6mhyMx/jx6j3PoyFBJW+QRt2Sq16pIQqLg==}
+    dependencies:
+      '@tanstack/query-core': 5.53.2
+    dev: false
+
+  /@tanstack/query-sync-storage-persister@5.53.2:
+    resolution: {integrity: sha512-8zhdPtT0+zbBD39p5+GIIA5ls4aFksCKNbL661bmKK/bnHuoAJZ4JGVpYpgc+Y2E21LfFsNGBx1DEGnSRVfMNQ==}
+    dependencies:
+      '@tanstack/query-core': 5.53.2
+      '@tanstack/query-persist-client-core': 5.53.2
+    dev: false
+
+  /@tanstack/solid-query-devtools@5.54.0(@tanstack/solid-query@5.53.2)(solid-js@1.8.22):
+    resolution: {integrity: sha512-s2PSVp0Be6gUwgQoAorJcyF6Cxp24xZCZztDOyXZ3XgZiayYpmKJQkxzVTjJWny+HASHP7oUKo2MyZX/Cgtukg==}
+    peerDependencies:
+      '@tanstack/solid-query': ^5.53.3
+      solid-js: ^1.6.0
+    dependencies:
+      '@tanstack/query-devtools': 5.54.0
+      '@tanstack/solid-query': 5.53.2(solid-js@1.8.22)
+      solid-js: 1.8.22
+    dev: true
+
+  /@tanstack/solid-query-persist-client@5.53.2(@tanstack/solid-query@5.53.2)(solid-js@1.8.22):
+    resolution: {integrity: sha512-oPozp7KpUZD5mQK9WmXBNNTTzS2d/mPPh0GdyDXATV7HA4zjz8geaLrZU52nq+YP4kqq+iSQ2BOaT7054r1KAA==}
+    peerDependencies:
+      '@tanstack/solid-query': ^5.53.2
+      solid-js: ^1.6.0
+    dependencies:
+      '@tanstack/query-persist-client-core': 5.53.2
+      '@tanstack/solid-query': 5.53.2(solid-js@1.8.22)
+      solid-js: 1.8.22
+    dev: false
+
+  /@tanstack/solid-query@5.53.2(solid-js@1.8.22):
+    resolution: {integrity: sha512-NQ+a5zklsbEaM0OeoJt6vpU4LGdTz4ChkCmWm7/9jij6pTRbTzitnTO3hNAn5/t8c9uVolh6ahjlghgOSGyE5A==}
+    peerDependencies:
+      solid-js: ^1.6.0
+    dependencies:
+      '@tanstack/query-core': 5.53.2
+      solid-js: 1.8.22
+
   /@thinke/toast@1.2.2:
     resolution: {integrity: sha512-vJkQAWD5yv0rjjEJYPyOS5smDHq3LXWwGoWNEIOeZKvR6HaRiApkeYJ3dWYlMd1TKjEF00NhTuGXSbx/MKdUUQ==}
     dev: false
@@ -4016,6 +4081,10 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
+  /globrex@0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
+    dev: true
+
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
     requiresBuild: true
@@ -5264,6 +5333,19 @@ packages:
       typescript: 5.5.4
     dev: true
 
+  /tsconfck@3.1.3(typescript@5.5.4):
+    resolution: {integrity: sha512-ulNZP1SVpRDesxeMLON/LtWM8HIgAJEIVpVVhBM6gsmvQ8+Rh+ZG7FWGvHh7Ah3pRABwVJWklWCr/BTZSv0xnQ==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.5.4
+    dev: true
+
   /tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
     dev: true
@@ -5476,6 +5558,23 @@ packages:
       vitefu: 0.2.5(vite@5.4.2)
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vite-tsconfig-paths@5.0.1(typescript@5.5.4)(vite@5.4.2):
+    resolution: {integrity: sha512-yqwv+LstU7NwPeNqajZzLEBVpUFU6Dugtb2P84FXuvaoYA+/70l9MHE+GYfYAycVyPSDYZ7mjOFuYBRqlEpTig==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+    dependencies:
+      debug: 4.3.6
+      globrex: 0.1.2
+      tsconfck: 3.1.3(typescript@5.5.4)
+      vite: 5.4.2(less@4.2.0)(terser@5.31.6)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /vite@5.4.2(less@4.2.0)(terser@5.31.6):

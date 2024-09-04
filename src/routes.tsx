@@ -1,7 +1,7 @@
 import type { RouteDefinition } from '@solidjs/router'
 import { lazy } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
-import { lazyCom } from './entry/ssr-utils'
+import { lazyCom, lazyKeepAlive } from './entry/ssr-utils'
 import { KeepAlive } from './libs/keepAlive'
 import Page404 from './pages/404'
 
@@ -23,41 +23,14 @@ export async function ayncRouters() {
       // async: true,
       insertStyleToHTML: true,
       path: '/',
-      component: await lazyCom(() => import('./pages/demo/index')),
+      component: await lazyKeepAlive(() => import('./pages/demo/index')),
     },
     {
-      path: '/d/:id',
-      component: await lazyCom(() => import('./pages/demo/did')),
+      path: '/demo',
+      // component: () => (<KeepAlive id="spa/demo"><Dynamic component={lazy(() => import('./pages/demo'))} /></KeepAlive>),
+      component: await lazyKeepAlive(() => import('./pages/demo/ssr')),
     },
-    {
-      path: '/ssr',
-      component: await lazyCom(() => import('./pages/demo/ssr')),
-    },
-    {
-      path: '/styleTest',
-      component: await lazyCom(() => import('./pages/demo/styleTest')),
-    },
-    {
-      path: '/lazy',
-      component: lazy (() => import('./pages/demo/index')),
-    },
-    // {
-    //   path: '/spa',
-    //   component: lazy(() => import('./pages/demo/layout')),
-    //   children: [
-    //     {
-    //       path: '/',
-    //       // component: lazy(() => import('../pages/demo')),
-    //       component: () => (<KeepAlive id="spa/demo"><Dynamic component={lazy(() => import('./pages/demo'))} /></KeepAlive>),
-    //     },
-    //     {
-    //       path: '/data',
-    //       component: lazy(() => import('./pages/demo/fetchData')),
-    //       // component: () => (<KeepAlive id="spa/data"><Dynamic component={lazy(() => import('../pages/demo/fetchData'))} /></KeepAlive>),
-    //     },
 
-    //   ],
-    // },
     {
       path: '*p404',
       component: Page404,

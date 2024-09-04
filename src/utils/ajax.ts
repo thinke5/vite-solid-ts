@@ -31,8 +31,9 @@ const defKY = ky.create({
         return new Request(request, { body: formData })
       }
       // 处理json
-      if (options.method === 'POST' && options.json && options.json instanceof Object)
+      if (options.method === 'POST' && options.json && options.json instanceof Object) {
         return new Request(request, { body: JSON.stringify({ ...authParam, ...options.json }) })
+      }
       // 其他情况直接返回原始的request
       return request
     }],
@@ -130,7 +131,7 @@ interface MyOptions extends Options {
  *
  * Object=>`application/json` ; FormData=>`multipart/form-data`; URLSearchParams=>`application/x-www-form-urlencoded`
  */
-export function POST(path: Input, data?: ReqJson | FormData | URLSearchParams, options?: MyOptions) {
+export function POST(path: Input, data: ReqJson | FormData | URLSearchParams = {}, options?: MyOptions) {
   if (data instanceof FormData || data instanceof URLSearchParams)
     return defKY.post(path, { body: data, ...options })
 

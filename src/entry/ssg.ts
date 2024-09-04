@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable node/prefer-global/process */
 /* eslint-disable ts/ban-ts-comment */
 // @ts-ignore
 import fs from 'node:fs/promises'
@@ -11,7 +13,7 @@ import { render } from './ssr-server'
 /** 按路由预渲染html */
 export default async function server() {
   async function routePreRander(r: IAyncRoute[], pPath = '') {
-    r.forEach(async (v) => {
+    for (const v of r) {
       const htmlPath = path.resolve('/', `./${pPath}`, String(v.path).replace(/^(\/)/, ''))
 
       if (v.children) {
@@ -23,16 +25,18 @@ export default async function server() {
         let html = `<!doctype html>${await randerFn(app)}`
         // fix bug  solidjs修复后可删除
         html = html.replaceAll('"_$HY.r', '";_$HY.r')
-
+        // 写入
         const htmlFsPath = path.resolve('./dist/public', `.${htmlPath}/index.html`)
         await fs.mkdir(path.dirname(htmlFsPath), { recursive: true })
         await fs.writeFile(htmlFsPath, html)
 
-        // eslint-disable-next-line no-console
         console.log(`prerander ok : ${htmlFsPath}`)
       }
-    })
+    }
   }
   await routePreRander(await ayncRouters())
+  console.log('end')
+  // @ts-ignore
+  process.exit(0) // 主动关闭执行
 }
 server()
