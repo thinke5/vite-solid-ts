@@ -7,6 +7,7 @@ import { MetaProvider, Title } from '@solidjs/meta'
 import { BUILD_TIME, BUILD_V } from './config'
 import SolidQuery from './libs/solid-query'
 import VConsole from './libs/vConsole'
+import PageSpy from './libs/pageSpy'
 import { KeepAliveProvider } from '~/libs/keepAlive'
 
 //  eslint-disable-next-line no-console
@@ -20,6 +21,7 @@ export default function App(props: { url?: string, routes: RouteDefinition[] }) 
         <MetaProvider>
           <Title>VITE + Solid + SPA</Title>
           <VConsole />
+          <PageSpy />
           <Router
             url={props.url}
             root={props => (

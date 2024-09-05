@@ -1,12 +1,16 @@
-import { createSignal } from 'solid-js'
+import { A, useLocation } from '@solidjs/router'
+import { createSignal, onMount } from 'solid-js'
 
 /** demo页面 */
 export default function Demo() {
-  console.log('ssr render')
-
   const [count, setCount] = createSignal(0)
+  const m = useLocation()
+  onMount(() => {
+    console.log('ssr render', m.pathname)
+  })
   return (
     <div class="2 f-c/s flex-col p-24px">
+      <A href="/">index</A>
       <p>
         conut =
         {count()}

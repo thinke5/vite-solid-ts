@@ -1,5 +1,6 @@
 import { isServer } from 'solid-js/web'
 import { appDevConfig } from './appDevConfig'
+import { loadJS } from '~/utils'
 
 /**
  * 手机网页的前端开发者调试面板。
@@ -10,15 +11,11 @@ export default function VConsole() {
     return null
   }
   if (appDevConfig.vconsole) {
-    const vconsoleJs = document.createElement('script')
-    vconsoleJs.src = 'https://unpkg.com/vconsole@latest/dist/vconsole.min.js'
-    vconsoleJs.onload = () => {
-    // eslint-disable-next-line ts/ban-ts-comment
+    loadJS('https://unpkg.com/vconsole@latest/dist/vconsole.min.js', () => {
+      // eslint-disable-next-line ts/ban-ts-comment
     // @ts-ignore
       const vConsole = new window.VConsole()
-    }
-
-    document.querySelector('head')?.appendChild(vconsoleJs)
+    })
   }
 
   return null

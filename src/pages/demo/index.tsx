@@ -1,3 +1,4 @@
+import { A } from '@solidjs/router'
 import { createQuery } from '@tanstack/solid-query'
 import { Show, Suspense, createResource, createSignal } from 'solid-js'
 import { bilibiliweekly } from '~/request/test'
@@ -19,6 +20,10 @@ export default function Demo() {
       <button class="px-20px py-10px" onClick={() => setCount(c => c + 1)}>
         conut = {count()}
       </button>
+      <div class="flex gap-16">
+        <A href="/demo">demo</A>
+        <A href="/devSetting">devSetting</A>
+      </div>
       {/* 请求模拟 */}
       <div class="">
         <button onClick={() => query.refetch()}>refetch</button>
