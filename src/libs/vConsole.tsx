@@ -14,7 +14,7 @@ export default function VConsole() {
     loadJS('https://unpkg.com/vconsole@latest/dist/vconsole.min.js', () => {
       // eslint-disable-next-line ts/ban-ts-comment
     // @ts-ignore
-      const vConsole = new window.VConsole()
+      const _vConsole = new window.VConsole()
     })
   }
 

@@ -20,8 +20,9 @@ export default function Demo() {
       <button class="px-20px py-10px" onClick={() => setCount(c => c + 1)}>
         conut = {count()}
       </button>
-      <div class="flex gap-16">
+      <div class="flex gap-8">
         <A href="/demo">demo</A>
+        <A href="/demo2">demo2</A>
         <A href="/devSetting">devSetting</A>
       </div>
       {/* 请求模拟 */}

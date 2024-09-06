@@ -24,7 +24,7 @@ try {
     }
   }
 }
-catch (error) { }
+catch (_e) { }
 
 export const [appDevConfig, setAppDevConfig] = createStore(lsData)
 

@@ -11,7 +11,7 @@ export default function PageSpy() {
     return null
   }
   if (appDevConfig.pageSpy.enable) {
-    const host = 'http://localhost:6752'
+    const host = 'http://e.thinke.vip:26848' // 测试使用
     Promise.all([
       loadJS(`${host}/page-spy/index.min.js`),
       loadJS(`${host}/plugin/data-harbor/index.min.js`),
@@ -26,6 +26,8 @@ export default function PageSpy() {
       w.PageSpy.registerPlugin(w.$rrweb)
       // start https://github.com/HuolalaTech/page-spy/tree/main/packages/page-spy-browser
       w.$pageSpy = new w.PageSpy({
+        // project: '',
+        // title: '',
         autoRender: appDevConfig.pageSpy.btn,
         offline: appDevConfig.pageSpy.offline,
       })

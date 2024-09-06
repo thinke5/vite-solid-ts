@@ -17,7 +17,7 @@ export default function DevSetting() {
     },
     {
       title: 'solidQueryDevtools',
-      desc: 'solid-query Devtools',
+      desc: '网络请求调试工具',
       value: appDevConfig.solidQueryDevtools,
       onClick: () => {
         setAppDevConfig({ solidQueryDevtools: !appDevConfig.solidQueryDevtools })

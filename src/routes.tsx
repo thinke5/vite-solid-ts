@@ -15,6 +15,10 @@ export async function ayncRouters() {
       component: await lazyKeepAlive(() => import('./pages/demo/ssr')),
     },
     {
+      path: '/demo2',
+      component: await lazyKeepAlive(() => import('./pages/demo/ssr')),
+    },
+    {
       path: '/devSetting',
       component: await lazyCom(() => import('./pages/devSetting/index')),
     },

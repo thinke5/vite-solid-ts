@@ -21,9 +21,7 @@ export function HTML(props: AppProps) {
           {props.headTags?.()}
 
           <HydrationScript />
-          <meta name="xx" content="xx" />
         </NoHydration>
-        <meta name="xx" content="yy" />
       </head>
 
       <body>

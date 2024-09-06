@@ -1,12 +1,18 @@
-import { A, useLocation } from '@solidjs/router'
-import { createSignal, onMount } from 'solid-js'
+import { A } from '@solidjs/router'
+import { createSignal, onCleanup, onMount } from 'solid-js'
+import { onReMount } from '~/libs/keepAlive'
 
 /** demo页面 */
 export default function Demo() {
   const [count, setCount] = createSignal(0)
-  const m = useLocation()
   onMount(() => {
-    console.log('ssr render', m.pathname)
+    console.log('demo mount')
+  })
+  onCleanup(() => {
+    console.log('demo cleanup')
+  })
+  onReMount(() => {
+    console.log('demo reMount')
   })
   return (
     <div class="2 f-c/s flex-col p-24px">
