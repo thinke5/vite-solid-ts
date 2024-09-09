@@ -23,8 +23,8 @@ const KeepAliveContext = createContext<Store>([
   () => [],
   {
     insertElement: () => undefined,
-    prioritizeElement: () => void 0,
-    removeElement: () => void 0,
+    prioritizeElement: () => undefined,
+    removeElement: () => undefined,
   },
 ])
 
