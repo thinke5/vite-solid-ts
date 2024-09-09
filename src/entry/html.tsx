@@ -21,6 +21,17 @@ export function HTML(props: AppProps) {
           {props.headTags?.()}
 
           <HydrationScript />
+          {/* TAM监控 */}
+          {/* <script src="https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js" crossOrigin="anonymous"></script>
+          <script>
+            {`window.$$tam_aegis = new window.Aegis(${JSON.stringify({
+              id: 'pGUVFTCZyewxxxxx', // 项目上报id
+              uin: 'xxx', // 用户唯一标识（可选）
+              reportApiSpeed: true, // 接口测速
+              reportAssetSpeed: true, // 静态资源测速
+              spa: true, // spa 页面需要开启，页面切换的时候上报pv
+            })});`}
+          </script> */}
         </NoHydration>
       </head>
 
