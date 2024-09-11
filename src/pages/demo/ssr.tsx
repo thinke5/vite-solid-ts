@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { A } from '@solidjs/router'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 import { onReMount } from '~/libs/keepAlive'

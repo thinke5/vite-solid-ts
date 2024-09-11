@@ -1,7 +1,7 @@
-import type { Component, JSXElement, Resource, ResourceActions, ResourceFetcher, ResourceOptions, ResourceSource } from 'solid-js'
-import { ErrorBoundary, Show, Suspense, createEffect, createResource, onMount } from 'solid-js'
 import { loading as iconLoading } from '@thinke/toast/icons'
+import { createEffect, createResource, ErrorBoundary, onMount, Show, Suspense } from 'solid-js'
 import { Dynamic, isServer } from 'solid-js/web'
+import type { Component, JSXElement, Resource, ResourceActions, ResourceFetcher, ResourceOptions, ResourceSource } from 'solid-js'
 
 export interface RequestBoundaryProps {
 

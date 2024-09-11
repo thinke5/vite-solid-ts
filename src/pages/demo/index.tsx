@@ -1,6 +1,6 @@
 import { A } from '@solidjs/router'
 import { createQuery } from '@tanstack/solid-query'
-import { Show, Suspense, createResource, createSignal } from 'solid-js'
+import { createSignal, Show, Suspense } from 'solid-js'
 import { bilibiliweekly } from '~/request/test'
 
 /** demo页面 */

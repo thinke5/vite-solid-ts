@@ -1,14 +1,14 @@
-import './app.less'
-import 'uno.css'
-import type { RouteDefinition } from '@solidjs/router'
+import { MetaProvider, Title } from '@solidjs/meta'
 import { Router } from '@solidjs/router'
 import { Suspense } from 'solid-js'
-import { MetaProvider, Title } from '@solidjs/meta'
+import type { RouteDefinition } from '@solidjs/router'
+import { KeepAliveProvider } from '~/libs/keepAlive'
 import { BUILD_TIME, BUILD_V } from './config'
+import PageSpy from './libs/pageSpy'
 import SolidQuery from './libs/solid-query'
 import VConsole from './libs/vConsole'
-import PageSpy from './libs/pageSpy'
-import { KeepAliveProvider } from '~/libs/keepAlive'
+import './app.less'
+import 'uno.css'
 
 //  eslint-disable-next-line no-console
 console.log(`%c ${BUILD_V} bulid in ${BUILD_TIME} `, 'background:#4a0;color:#fff;padding:6px;') // 打印版本

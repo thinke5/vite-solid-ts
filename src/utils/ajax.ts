@@ -1,6 +1,6 @@
-import type { Input, Options } from 'ky'
-import ky, { HTTPError } from 'ky'
 import { error as toastError } from '@thinke/toast'
+import ky, { HTTPError } from 'ky'
+import type { Input, Options } from 'ky'
 import { BASEURL } from '../config'
 
 const myErrStatus = 499

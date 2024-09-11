@@ -1,6 +1,6 @@
 import { isServer } from 'solid-js/web'
-import { appDevConfig } from './appDevConfig'
 import { loadJS } from '~/utils'
+import { appDevConfig } from './appDevConfig'
 
 /**
  * 调试 & 回放工具

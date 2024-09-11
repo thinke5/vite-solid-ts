@@ -1,6 +1,6 @@
 import { isServer } from 'solid-js/web'
-import { appDevConfig } from './appDevConfig'
 import { loadJS } from '~/utils'
+import { appDevConfig } from './appDevConfig'
 
 /**
  * 手机网页的前端开发者调试面板。

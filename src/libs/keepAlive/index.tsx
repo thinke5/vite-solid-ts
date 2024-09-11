@@ -1,7 +1,7 @@
 // 修改自 https://github.com/JulianSoto/solid-keep-alive
-import type { Accessor, JSX, Owner, ParentProps } from 'solid-js'
 import { createContext, createEffect, createMemo, createRoot, createSignal, getOwner, onCleanup, onMount, runWithOwner, useContext } from 'solid-js'
 import { isServer } from 'solid-js/web'
+import type { Accessor, JSX, Owner, ParentProps } from 'solid-js'
 
 export interface KeepAliveElement {
   id: string

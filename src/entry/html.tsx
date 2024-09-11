@@ -1,6 +1,6 @@
+import { ErrorBoundary, HydrationScript, NoHydration } from 'solid-js/web'
 import type { RouteDefinition } from '@solidjs/router'
 import type { JSX } from 'solid-js'
-import { ErrorBoundary, HydrationScript, NoHydration } from 'solid-js/web'
 import App from '../app'
 
 interface AppProps {

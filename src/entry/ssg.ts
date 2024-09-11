@@ -6,9 +6,9 @@ import fs from 'node:fs/promises'
 // @ts-ignore
 import path from 'node:path'
 import { renderToString, renderToStringAsync } from 'solid-js/web'
-import type { IAyncRoute } from '../routes'
 import { ayncRouters } from '../routes'
 import { render } from './ssr-server'
+import type { IAyncRoute } from '../routes'
 
 /** 按路由预渲染html */
 export default async function server() {

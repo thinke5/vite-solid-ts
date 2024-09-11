@@ -1,8 +1,8 @@
 import { assetsForRequest } from '@ssrx/vite/runtime'
-import type { IAyncRoute } from '../routes'
 import { ayncRouters } from '../routes'
 import { HTML } from './html'
 import { renderAssets } from './ssr-server-utils'
+import type { IAyncRoute } from '../routes'
 
 async function render(req: Request, thisRoute?: IAyncRoute) {
   const assets = await assetsForRequest(req.url)

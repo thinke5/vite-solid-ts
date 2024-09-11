@@ -3,8 +3,8 @@
 import fs from 'node:fs'
 // @ts-ignore
 import path from 'node:path'
-import type { AssetHtmlTag } from '@ssrx/vite/runtime'
 import { Dynamic, isServer } from 'solid-js/web'
+import type { AssetHtmlTag } from '@ssrx/vite/runtime'
 
 let base = import.meta.env.BASE_URL
 switch (base) {

@@ -1,7 +1,7 @@
-import { type JSX, Show, Suspense, lazy } from 'solid-js'
-import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { persistQueryClient } from '@tanstack/solid-query-persist-client'
+import { type JSX, lazy, Show, Suspense } from 'solid-js'
 import { isServer } from 'solid-js/web'
 import { appDevConfig } from './appDevConfig'
 

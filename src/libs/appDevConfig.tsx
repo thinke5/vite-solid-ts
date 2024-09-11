@@ -1,5 +1,5 @@
-import { createStore } from 'solid-js/store'
 import { createEffect } from 'solid-js'
+import { createStore } from 'solid-js/store'
 
 const appDevConfigLSKey = 'appDevConfig'
 
@@ -24,6 +24,7 @@ try {
     }
   }
 }
+// eslint-disable-next-line unused-imports/no-unused-vars
 catch (_e) { }
 
 export const [appDevConfig, setAppDevConfig] = createStore(lsData)
