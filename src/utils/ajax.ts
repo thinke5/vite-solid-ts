@@ -1,16 +1,35 @@
 import { error as toastError } from '@thinke/toast'
 import ky, { HTTPError } from 'ky'
 import type { Input, Options } from 'ky'
-import { BASEURL } from '../config'
+import { appDevConfig } from '~/libs/appDevConfig'
+import { BASEURL, isDEV, isRDM } from '../config'
+import { nextTick } from './index'
 
 const myErrStatus = 499
 
 /** 获取鉴权数据 */
-async function getAuthParam(): Promise<Record<string, any>> {
-  return Promise.resolve({
+async function getAuthParam() {
+  await nextTick(100)
+  const headerParam = {}
+  const bodyParam = {
     openid: 'OPENID',
     token: 'TOKEN',
-  })
+  }
+
+  let mockAuthParam = {}
+  if (isRDM || isDEV) {
+    if (appDevConfig.mockAuthParam.enable) {
+      mockAuthParam = appDevConfig.mockAuthParam.value
+    }
+  }
+
+  return {
+    bodyParam: {
+      ...bodyParam,
+      ...mockAuthParam,
+    },
+    headerParam,
+  }
 }
 
 const defKY = ky.create({
@@ -21,18 +40,18 @@ const defKY = ky.create({
     // 请求发出前
     beforeRequest: [async (request, options: Options) => {
       const authParam = await getAuthParam()
-      // console.log('发送请求', { request, options })
+      // const header = { 'tencent-tmga-pvpdatawebsvr': JSON.stringify(authParam.headerParam) }
       // 处理表单提交时，自动添加鉴权参数
       if (options.method === 'POST' && options.body instanceof FormData) {
         const formData = options.body!
-        Object.entries(authParam).forEach(([key, value]) => {
+        Object.entries(authParam.bodyParam).forEach(([key, value]) => {
           formData.append(key, value)
         })
         return new Request(request, { body: formData })
       }
       // 处理json
       if (options.method === 'POST' && options.json && options.json instanceof Object) {
-        return new Request(request, { body: JSON.stringify({ ...authParam, ...options.json }) })
+        return new Request(request, { body: JSON.stringify({ ...authParam.bodyParam, ...options.json }) })
       }
       // 其他情况直接返回原始的request
       return request

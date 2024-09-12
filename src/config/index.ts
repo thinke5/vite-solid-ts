@@ -8,3 +8,7 @@ export const isRDM = import.meta.env.MODE === 'rdm'
 export const BUILD_TIME = import.meta.env.VITE_BUILD_TIME
 /** 版本号 */
 export const BUILD_V = import.meta.env.VITE_BUILD_V
+/** 项目名称 */
+export const ProjectName = import.meta.env.VITE__ProjectName
+/** 路由前缀 */
+export const RouteBasePah = `/h/${ProjectName}`

@@ -3,7 +3,7 @@ import { Router } from '@solidjs/router'
 import { Suspense } from 'solid-js'
 import type { RouteDefinition } from '@solidjs/router'
 import { KeepAliveProvider } from '~/libs/keepAlive'
-import { BUILD_TIME, BUILD_V } from './config'
+import { BUILD_TIME, BUILD_V, RouteBasePah } from './config'
 import PageSpy from './libs/pageSpy'
 import SolidQuery from './libs/solid-query'
 import VConsole from './libs/vConsole'
@@ -23,6 +23,7 @@ export default function App(props: { url?: string, routes: RouteDefinition[] }) 
           <VConsole />
           <PageSpy />
           <Router
+            base={RouteBasePah}
             url={props.url}
             root={props => (
               <div class="root-content">

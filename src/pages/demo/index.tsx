@@ -17,9 +17,13 @@ export default function Demo() {
     <div class="f-c/s flex-col p-24px">
       <img class="s-20" src="/vite.svg" />
       <h1 class="m-0">vite + solid + SSG</h1>
-      <button class="px-20px py-10px" onClick={() => setCount(c => c + 1)}>
-        conut = {count()}
-      </button>
+      <div class="">
+        <button class="px-20px py-10px" onClick={() => setCount(c => c + 1)}>
+          conut = {count()}
+        </button>
+
+      </div>
+
       <div class="flex gap-8">
         <A href="/demo">demo</A>
         <A href="/demo2">demo2</A>

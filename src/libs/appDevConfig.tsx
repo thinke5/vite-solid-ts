@@ -3,7 +3,7 @@ import { createStore } from 'solid-js/store'
 
 const appDevConfigLSKey = 'appDevConfig'
 
-const ver = '1.0'
+const ver = '1.2'
 // 增加配置需要修改上面👆的版本，否则 不生效
 let lsData = {
   vconsole: false,
@@ -12,6 +12,10 @@ let lsData = {
     enable: false,
     btn: false,
     offline: true,
+  },
+  mockAuthParam: {
+    enable: false,
+    value: {},
   },
 }
 

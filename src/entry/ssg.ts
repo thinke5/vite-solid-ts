@@ -6,6 +6,7 @@ import fs from 'node:fs/promises'
 // @ts-ignore
 import path from 'node:path'
 import { renderToString, renderToStringAsync } from 'solid-js/web'
+import { RouteBasePah } from '../config'
 import { ayncRouters } from '../routes'
 import { render } from './ssr-server'
 import type { IAyncRoute } from '../routes'
@@ -14,7 +15,7 @@ import type { IAyncRoute } from '../routes'
 export default async function server() {
   async function routePreRander(r: IAyncRoute[], pPath = '') {
     for (const v of r) {
-      const htmlPath = path.resolve('/', `./${pPath}`, String(v.path).replace(/^(\/)/, ''))
+      const htmlPath = path.resolve(`${RouteBasePah}/`, `./${pPath}`, String(v.path).replace(/^(\/)/, ''))
 
       if (v.children) {
         await routePreRander(v.children as any, htmlPath)

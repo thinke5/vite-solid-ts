@@ -22,7 +22,7 @@ export function HTML(props: AppProps) {
 
           <HydrationScript />
           {/* TAM监控 */}
-          {/* <script src="https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js" crossOrigin="anonymous"></script>
+          {/* <script type="text/javascript" src="https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js" crossOrigin="anonymous"></script>
           <script>
             {`window.$$tam_aegis = new window.Aegis(${JSON.stringify({
               id: 'pGUVFTCZyewxxxxx', // 项目上报id
@@ -32,6 +32,7 @@ export function HTML(props: AppProps) {
               spa: true, // spa 页面需要开启，页面切换的时候上报pv
             })});`}
           </script> */}
+
         </NoHydration>
       </head>
 

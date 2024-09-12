@@ -5,7 +5,8 @@ import { appDevConfig, setAppDevConfig } from '~/libs/appDevConfig'
 
 /**  */
 export default function DevSetting() {
-  const nav = useNavigate()
+  const navigate = useNavigate()
+
   const list = () => [
     {
       title: 'vConsole',
@@ -53,6 +54,40 @@ export default function DevSetting() {
         }))
       },
     },
+    {
+      title: '模拟其他用户',
+      desc: '模拟其他用户',
+      value: appDevConfig.mockAuthParam.enable,
+      onClick: () => {
+        setAppDevConfig(produce((dort) => {
+          dort.mockAuthParam.enable = !dort.mockAuthParam.enable
+        }))
+      },
+      children: (
+        <div
+          class="w-full flex flex-col px-3"
+          onClick={(e) => {
+            e.stopPropagation()
+          }}
+        >
+          <span class="text-xs text-gray-5">请输入json字符串以覆盖body中的通用参数</span>
+          <textarea
+            placeholder="请输入json字符串"
+            value={JSON.stringify(appDevConfig.mockAuthParam.value)}
+            onInput={(v) => {
+              try {
+                const res = JSON.parse(v.target.value)
+                setAppDevConfig(produce((dort) => {
+                  dort.mockAuthParam.value = res
+                }))
+              }
+              // eslint-disable-next-line unused-imports/no-unused-vars
+              catch (_e) {}
+            }}
+          />
+        </div>
+      ),
+    },
   ]
   return (
     <div class="min-h-dvh bg-blueGray-2 py-1">
@@ -62,7 +97,7 @@ export default function DevSetting() {
       <div class="my-3 f-c/c gap-6">
         <button
           class="rd-2 b-none bg-orange-1 px-6 py-2"
-          onClick={() => nav(-1)}
+          onClick={() => navigate(-1)}
         >
           返回上一页
         </button>
@@ -71,21 +106,25 @@ export default function DevSetting() {
           onClick={() => location.reload()}
         >刷新页面
         </button>
-
       </div>
+
       <p class="px-3 text-xs text-orange leading-tight">下面开关会影响页面，开关之间可能会互相影响<br />请咨询开发者后打开。 </p>
+
       <div class="bg-light">
         <For each={list()}>{item => (
-          <div class="f-c/sb px-4 py-2 leading-tight shadow-sm" onClick={item.onClick}>
-            <div class="flex flex-1 flex-col">
-              <span class="text-base">{item.title}</span>
-              <span class="text-sm text-gray-5">{item.desc}</span>
+          <div class="leading-tight shadow-sm" onClick={item.onClick}>
+            <div class="f-c/sb px-4 py-2">
+              <div class="flex flex-1 flex-col">
+                <span class="text-base">{item.title}</span>
+                <span class="text-sm text-gray-5">{item.desc}</span>
+              </div>
+              <div class="text-red">
+                <Show when={item.value} fallback="关">
+                  <span class="text-green-6">开</span>
+                </Show>
+              </div>
             </div>
-            <div class="text-red">
-              <Show when={item.value} fallback="关">
-                <span class="text-green-6">开</span>
-              </Show>
-            </div>
+            <Show when={item.value}>{item.children}</Show>
           </div>
         )}
         </For>

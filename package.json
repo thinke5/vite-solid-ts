@@ -52,5 +52,10 @@
     "vite-plugin-singlefile": "^2.0.2",
     "vite-plugin-solid": "^2.10.2",
     "vite-tsconfig-paths": "^5.0.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "latest"
+    }
   }
 }

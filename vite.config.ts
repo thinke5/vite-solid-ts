@@ -3,13 +3,13 @@
 import { dirname, resolve } from 'node:path'
 // @ts-expect-error
 import { fileURLToPath } from 'node:url'
+import { ssrx } from '@ssrx/vite/plugin'
+import dayjs from 'dayjs'
 import unocss from 'unocss/vite'
-import type { PluginOption } from 'vite'
 import { defineConfig, loadEnv } from 'vite'
 import solid from 'vite-plugin-solid'
-import dayjs from 'dayjs'
-import { ssrx } from '@ssrx/vite/plugin'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import type { PluginOption } from 'vite'
 
 // @ts-expect-error
 // eslint-disable-next-line node/prefer-global/process
@@ -20,20 +20,22 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 /** 是否流水线 */
 const isCI = Boolean(ENV.BK_CI_BUILD_NO)
 /** 构建版本号 */
-const build_version = ENV.BK_CI_BUILD_NO ? `${ENV.BK_CI_MAJOR_VERSION}.${ENV.BK_CI_MINOR_VERSION}.${ENV.BK_CI_FIX_VERSION}-${ENV.BK_CI_BUILD_NO}` : 'dev'
+const build_version = isCI ? `${ENV.BK_CI_MAJOR_VERSION}.${ENV.BK_CI_MINOR_VERSION}.${ENV.BK_CI_FIX_VERSION}-${ENV.BK_CI_BUILD_NO}` : 'dev'
 
 const isSSR = ENV.BUILD_TYPE_VSR === 'ssr'
 
 export default defineConfig(async ({ command, mode, isSsrBuild }) => {
   const isBuild = command === 'build'
-  const CDN_host = 'https://xxxxx.com'
+  const CDN_host = 'https://xxxxx.com' // TODO:使用实际域名
+  const ProjectName = 'zzzzzzz' // TODO:使用实际项目
 
   return {
-    base: isBuild && isCI ? `${CDN_host}/zzzzzzz/H5-${mode}/yyyyyyyyy/${build_version}/` : '/', // CDN,
+    base: isBuild && isCI ? `${CDN_host}/zzzz/web/H5-${mode}/${ProjectName}/${build_version}/` : '/', // CDN,
     define: {
       'import.meta.env.VITE_BUILD_TIME': JSON.stringify(dayjs().format('YYYY-MM-DD HH:mm:ss')),
       'import.meta.env.VITE_BUILD_V': JSON.stringify(isBuild ? build_version : '0.0.0-dev'),
       'import.meta.env.VITE__NOT_IN_SSRX': 'true',
+      'import.meta.env.VITE__ProjectName': JSON.stringify(ProjectName),
     },
     plugins: [
       tsconfigPaths(),
