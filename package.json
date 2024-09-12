@@ -12,6 +12,7 @@
     "check:ts": "tsc",
     "preview": "vite preview",
     "-----SSG-----": "",
+    "build:[example]": "npm run build:ssg-client -- --mode [example] && npm run build:ssg-server -- --mode [example] && cross-env NODE_ENV=production node dist/server.js",
     "build:ssg": "npm run build:ssg-client && npm run build:ssg-server && cross-env NODE_ENV=production node dist/server.js",
     "build:ssg-client": "cross-env BUILD_TYPE_VSR=ssr vite build",
     "build:ssg-server": "cross-env BUILD_TYPE_VSR=ssr vite build --ssr",

@@ -15,7 +15,7 @@ export default function Demo() {
 
   return (
     <div class="f-c/s flex-col p-24px">
-      <img class="s-20" src="/vite.svg" />
+      <img class="s-20" src="./vite.svg" />
       <h1 class="m-0">vite + solid + SSG</h1>
       <div class="">
         <button class="px-20px py-10px" onClick={() => setCount(c => c + 1)}>
@@ -43,9 +43,4 @@ export default function Demo() {
       </div>
     </div>
   )
-}
-function sleeptest(time = 0) {
-  console.log(' sleep ', time)
-
-  return new Promise<number>(resolve => setTimeout(() => resolve(time), time))
 }

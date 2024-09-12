@@ -30,7 +30,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
   const ProjectName = 'zzzzzzz' // TODO:使用实际项目
 
   return {
-    base: isBuild && isCI ? `${CDN_host}/zzzz/web/H5-${mode}/${ProjectName}/${build_version}/` : '/', // CDN,
+    base: isBuild && isCI ? `${CDN_host}/zzzz/web/H5-${mode}/${ProjectName}/${build_version}/` : `/h/${ProjectName}/`, // CDN,
     define: {
       'import.meta.env.VITE_BUILD_TIME': JSON.stringify(dayjs().format('YYYY-MM-DD HH:mm:ss')),
       'import.meta.env.VITE_BUILD_V': JSON.stringify(isBuild ? build_version : '0.0.0-dev'),
