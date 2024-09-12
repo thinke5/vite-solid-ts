@@ -1,7 +1,7 @@
-import type { Component, JSXElement, Resource, ResourceActions, ResourceFetcher, ResourceOptions, ResourceSource } from 'solid-js'
-import { ErrorBoundary, Show, Suspense, createEffect, createResource, onMount } from 'solid-js'
 import { loading as iconLoading } from '@thinke/toast/icons'
-import { Dynamic } from 'solid-js/web'
+import { createEffect, createResource, ErrorBoundary, onMount, Show, Suspense } from 'solid-js'
+import { Dynamic, isServer } from 'solid-js/web'
+import type { Component, JSXElement, Resource, ResourceActions, ResourceFetcher, ResourceOptions, ResourceSource } from 'solid-js'
 
 export interface RequestBoundaryProps {
 
@@ -50,14 +50,14 @@ export function MaskLoadingOnlyUI() {
       if (pClientRect) {
         $div.style.width = `${pClientRect.width}px`
         $div.style.height = `${pClientRect.height}px`
-        $div.style.top = `${pClientRect.top}px`
-        $div.style.left = `${pClientRect.left}px`
+        // $div.style.top = `${pClientRect.top}px`
+        // $div.style.left = `${pClientRect.left}px`
       }
     }
   })
   return (
-    <div class="fixed z-98 f-c/c bg-gray/15 text-blue" ref={$div!}>
-      {SvgString2Element(iconLoading)}
+    <div class="absolute z-98 s-10 f-c/c bg-bluegray/5 text-blue" ref={$div!}>
+      <i innerHTML={iconLoading} />
     </div>
   )
 };
@@ -81,9 +81,11 @@ export function MaskLoadingUI(props: LoadingUIProps) {
   return (
     <>
       <Show when={props.resource.loading}>
-        <div class="fixed z-98 f-c/c bg-gray/5 text-blue" ref={$div!}>
-          {SvgString2Element(iconLoading)}
+
+        <div class="absolute z-98 f-c/c bg-gray/5 text-blue" ref={$div!}>
+          <i innerHTML={iconLoading} />
         </div>
+
       </Show>
       <Show when={props.resource()}>
         {props.children}
@@ -96,10 +98,9 @@ export function MaskLoadingUI(props: LoadingUIProps) {
 // #region 默认的错误UI
 /** 默认的错误UI */
 export function DefaultErrorUI(props: ErrorUIProps) {
-  onMount(() => {
-    if (import.meta.env.DEV)
-      console.error(props.error)
-  })
+  if (import.meta.env.DEV || isServer) {
+    console.error(props.error)
+  }
   return (
     <div class="s-full f-c/c flex-col rd-.5em bg-red-1/40">
       <span class="text-.8em">发生错误！</span>
@@ -113,14 +114,6 @@ interface ErrorUIProps { error: any, reset: () => void }
 interface LoadingUIProps {
   resource: Resource<any>
   children: JSXElement
-}
-
-function SvgString2Element(svg: string) {
-  let $div: any = document.createElement('div')
-  $div.innerHTML = svg
-  const svgElement = $div.firstChild
-  $div = null
-  return svgElement
 }
 
 interface Ready<T> {

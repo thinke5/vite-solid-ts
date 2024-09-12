@@ -1,4 +1,4 @@
-import antfu from '@antfu/eslint-config'
+import antfu from "@antfu/eslint-config";
 
 const config = antfu({
   solid: !true,
@@ -10,13 +10,14 @@ const config = antfu({
 
   stylistic: {
     indent: 2, // 4, or 'tab'
-    quotes: 'single', // or 'double'
+    quotes: "single", // or 'double'
   },
   rules: {
-    'no-console': ['warn', { allow: ['warn', 'error'] }],
-    'unused-imports/no-unused-vars': 'warn',
-    'style/jsx-one-expression-per-line': [0, { allow: 'non-jsx' }],
+    "no-console": ["warn", { allow: ["warn", "error"] }],
+    "unused-imports/no-unused-vars": "warn",
+    "style/jsx-one-expression-per-line": [0, { allow: "non-jsx" }],
+    "unicorn/consistent-function-scoping": "off",
   },
-})
+});
 
-export default config
+export default config;

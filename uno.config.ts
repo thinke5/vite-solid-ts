@@ -1,5 +1,5 @@
-import { defineConfig, presetMini, transformerVariantGroup } from 'unocss'
 import wmlPreset from '@thinke/unocss-wml-preset'
+import { defineConfig, presetMini, transformerVariantGroup } from 'unocss'
 
 export default defineConfig({
   presets: [

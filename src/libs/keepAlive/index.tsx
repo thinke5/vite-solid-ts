@@ -1,6 +1,7 @@
-// https://github.com/JulianSoto/solid-keep-alive
+// 修改自 https://github.com/JulianSoto/solid-keep-alive
+import { createContext, createEffect, createMemo, createRoot, createSignal, getOwner, onCleanup, onMount, runWithOwner, useContext } from 'solid-js'
+import { isServer } from 'solid-js/web'
 import type { Accessor, JSX, Owner, ParentProps } from 'solid-js'
-import { createContext, createEffect, createMemo, createRoot, createSignal, getOwner, onCleanup, runWithOwner, useContext } from 'solid-js'
 
 export interface KeepAliveElement {
   id: string
@@ -22,8 +23,8 @@ const KeepAliveContext = createContext<Store>([
   () => [],
   {
     insertElement: () => undefined,
-    prioritizeElement: () => void 0,
-    removeElement: () => void 0,
+    prioritizeElement: () => undefined,
+    removeElement: () => undefined,
   },
 ])
 
@@ -52,16 +53,6 @@ export function KeepAliveProvider(props: ParentProps<{ maxElements?: number }>) 
     }
   }
 
-  const insertElement = (element: KeepAliveElement) => {
-    setKeepAliveElements((prev) => {
-      let newElements = [...prev, element]
-      if (newElements.length > (props.maxElements || 10))
-        newElements = newElements.filter(el => el.id !== priorityIndex[0])
-      return newElements
-    })
-    return element
-  }
-
   const removeElement = (id: string) => {
     const element = keepAliveElements().find(el => el.id === id)
     if (element) {
@@ -69,7 +60,14 @@ export function KeepAliveProvider(props: ParentProps<{ maxElements?: number }>) 
       setKeepAliveElements(prev => prev.filter(el => el.id !== element.id))
     }
   }
+  const insertElement = (element: KeepAliveElement) => {
+    setKeepAliveElements(prev => [...prev, element])
+    if (keepAliveElements()?.length > (props.maxElements || 9)) {
+      removeElement(keepAliveElements()[0].id)
+    }
 
+    return element
+  }
   const store: Store = [
     keepAliveElements,
     { insertElement, prioritizeElement, removeElement },
@@ -91,7 +89,13 @@ interface KeepAliveProps {
   onDispose?: () => void
 }
 
-export function KeepAlive(props: ParentProps<KeepAliveProps>) {
+const ReMountStore: { [id: string]: { num: number, fns: IReMountFn[] } } = {}
+const KeepAliveElementContext = createContext({ id: '-' })
+
+export function KeepAlive_(props: ParentProps<KeepAliveProps>) {
+  if (isServer) {
+    return props.children
+  }
   const [keepAliveElements, { insertElement, prioritizeElement }] = useKeepAlive()
 
   const currentElement = createMemo(() => keepAliveElements().find(el => el.id === props.id))
@@ -99,9 +103,25 @@ export function KeepAlive(props: ParentProps<KeepAliveProps>) {
   if (!currentElement()) {
     createRoot((dispose) => {
       insertElement({ id: props.id, owner: getOwner(), children: props.children, dispose })
-      onCleanup(() => props.onDispose?.())
+      onCleanup(() => {
+        ReMountStore[props.id] = null as any // 删除引用
+        props.onDispose?.()
+      })
     })
   }
+  onMount(() => {
+    const id = props.id
+    if (ReMountStore[id]) {
+      ReMountStore[id].num += 1
+    }
+    else {
+      ReMountStore[id] = { num: 0, fns: [] }
+    }
+    // 再次挂载时，执行
+    if (ReMountStore[id].num > 1) {
+      ReMountStore[id].fns.forEach(fn => fn())
+    }
+  })
 
   return (() => {
     const element = currentElement()
@@ -114,3 +134,23 @@ export function KeepAlive(props: ParentProps<KeepAliveProps>) {
     return null
   }) as any
 }
+
+export function KeepAlive(props: ParentProps<KeepAliveProps>) {
+  return (
+    <KeepAliveElementContext.Provider value={{ id: props.id }}>
+      <KeepAlive_ {...props} />
+    </KeepAliveElementContext.Provider>
+  )
+}
+/** KeepAlive 的页面 在非首次加载时会执行传入的函数 */
+export function onReMount(fn: IReMountFn) {
+  const kaec = useContext(KeepAliveElementContext)
+  if (ReMountStore[kaec.id]) {
+    ReMountStore[kaec.id].fns.push(fn)
+  }
+  else {
+    ReMountStore[kaec.id] = { num: 0, fns: [fn] }
+  }
+}
+
+type IReMountFn = () => void | Promise<void>

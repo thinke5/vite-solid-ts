@@ -1,16 +1,35 @@
-import type { Input, Options } from 'ky'
-import ky, { HTTPError } from 'ky'
 import { error as toastError } from '@thinke/toast'
-import { BASEURL } from '../config'
+import ky, { HTTPError } from 'ky'
+import type { Input, Options } from 'ky'
+import { appDevConfig } from '~/libs/appDevConfig'
+import { BASEURL, isDEV, isRDM } from '../config'
+import { nextTick } from './index'
 
 const myErrStatus = 499
 
-/** 模拟 获取鉴权数据 */
-function getAuthParam() {
-  return Promise.resolve({
+/** 获取鉴权数据 */
+async function getAuthParam() {
+  await nextTick(100)
+  const headerParam = {}
+  const bodyParam = {
     openid: 'OPENID',
     token: 'TOKEN',
-  })
+  }
+
+  let mockAuthParam = {}
+  if (isRDM || isDEV) {
+    if (appDevConfig.mockAuthParam.enable) {
+      mockAuthParam = appDevConfig.mockAuthParam.value
+    }
+  }
+
+  return {
+    bodyParam: {
+      ...bodyParam,
+      ...mockAuthParam,
+    },
+    headerParam,
+  }
 }
 
 const defKY = ky.create({
@@ -21,18 +40,19 @@ const defKY = ky.create({
     // 请求发出前
     beforeRequest: [async (request, options: Options) => {
       const authParam = await getAuthParam()
-      // console.log('发送请求', { request, options })
+      // const header = { 'tencent-tmga-pvpdatawebsvr': JSON.stringify(authParam.headerParam) }
       // 处理表单提交时，自动添加鉴权参数
       if (options.method === 'POST' && options.body instanceof FormData) {
         const formData = options.body!
-        Object.entries(authParam).forEach(([key, value]) => {
+        Object.entries(authParam.bodyParam).forEach(([key, value]) => {
           formData.append(key, value)
         })
         return new Request(request, { body: formData })
       }
       // 处理json
-      if (options.method === 'POST' && options.json && options.json instanceof Object)
-        return new Request(request, { body: JSON.stringify({ ...authParam, ...options.json }) })
+      if (options.method === 'POST' && options.json && options.json instanceof Object) {
+        return new Request(request, { body: JSON.stringify({ ...authParam.bodyParam, ...options.json }) })
+      }
       // 其他情况直接返回原始的request
       return request
     }],
@@ -54,6 +74,7 @@ const defKY = ky.create({
           return new MyResponse(response, { code, message, data, traceId })
         }
       }
+      return response
     }],
     // 请求出错后
     beforeError: [
@@ -62,7 +83,7 @@ const defKY = ky.create({
         const error = _error as MyAjaxError
         const option = error.options as MyOptions
         if (option.showToast !== false)
-          toastError(`${error.code} ${error.message}`, 3000)
+          toastError(`${error.code} ${error.message}`, typeof option.showToast === 'number' ? option.showToast : 2500)
 
         return error
       },
@@ -120,8 +141,8 @@ interface MyResponseCause {
 }
 
 interface MyOptions extends Options {
-  /** 是否在请求错误时显示toast @default true */
-  showToast?: boolean
+  /** 是否在请求错误时显示toast,传入数字则为显示的时长 @default true */
+  showToast?: boolean | number
 }
 
 /**
@@ -129,7 +150,7 @@ interface MyOptions extends Options {
  *
  * Object=>`application/json` ; FormData=>`multipart/form-data`; URLSearchParams=>`application/x-www-form-urlencoded`
  */
-export function POST(path: Input, data?: ReqJson | FormData | URLSearchParams, options?: MyOptions) {
+export function POST(path: Input, data: ReqJson | FormData | URLSearchParams = {}, options?: MyOptions) {
   if (data instanceof FormData || data instanceof URLSearchParams)
     return defKY.post(path, { body: data, ...options })
 

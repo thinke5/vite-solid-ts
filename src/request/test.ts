@@ -13,7 +13,10 @@ export function bingBgByGet() {
 export function Qrdecode() {
   return POST('v2/decode', { url: 'json' }).json<{ data: { url: string, text: string } }>()
 }
-
+/** 哔哩哔哩每周必看 https://docs.tenapi.cn/bilibili/weekly.html */
+export function bilibiliweekly() {
+  return POST('v2/bilihot').json<{ name: string, url: string }[]>()
+}
 let num = 0
 export async function apiTest(param: { a: number }) {
   await sleep(2000)
@@ -33,5 +36,7 @@ export interface BingRsq {
 }
 
 function sleep(timeout: number) {
-  return new Promise((resolve) => { setTimeout(resolve, timeout) })
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout)
+  })
 }
