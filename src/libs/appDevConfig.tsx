@@ -1,7 +1,7 @@
 import { createEffect } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
-const appDevConfigLSKey = 'appDevConfig'
+export const appDevConfigLSKey = 'appDevConfig'
 
 const ver = '1.2'
 // 增加配置需要修改上面👆的版本，否则 不生效

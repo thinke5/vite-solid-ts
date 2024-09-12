@@ -1,7 +1,7 @@
 import { useNavigate } from '@solidjs/router'
 import { For, Show } from 'solid-js'
 import { produce } from 'solid-js/store'
-import { appDevConfig, setAppDevConfig } from '~/libs/appDevConfig'
+import { appDevConfig, appDevConfigLSKey, setAppDevConfig } from '~/libs/appDevConfig'
 
 /**  */
 export default function DevSetting() {
@@ -105,6 +105,15 @@ export default function DevSetting() {
           class="rd-2 b-none bg-blue-2 px-8 py-3"
           onClick={() => location.reload()}
         >刷新页面
+        </button>
+        <button
+          class="rd-2 b-none bg-red-3 px-4 py-2"
+          onClick={() => {
+            localStorage.removeItem(appDevConfigLSKey)
+            location.reload()
+          }}
+        >
+          重置设置
         </button>
       </div>
 
