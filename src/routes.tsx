@@ -1,9 +1,10 @@
 import type { RouteDefinition } from '@solidjs/router'
+import { isDEV, isRDM } from './config'
 import { lazyCom, lazyKeepAlive } from './entry/ssr-utils'
 import Page404 from './pages/404'
 
 export async function ayncRouters() {
-  return [
+  const list: IAyncRoute[] = [
     {
       // async: true,
       insertStyleToHTML: true,
@@ -27,7 +28,15 @@ export async function ayncRouters() {
       path: '*p404',
       component: Page404,
     },
-  ] satisfies IAyncRoute[]
+  ]
+  if (isRDM || isDEV) {
+    // 测试开关页面，正式环境不开启
+    list.push({
+      path: '/devSetting',
+      component: await lazyCom(() => import('./pages/devSetting/index')),
+    })
+  }
+  return list
 }
 
 export interface IAyncRoute extends RouteDefinition {

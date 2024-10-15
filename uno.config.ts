@@ -1,9 +1,9 @@
 import wmlPreset from '@thinke/unocss-wml-preset'
-import { defineConfig, presetMini, transformerVariantGroup } from 'unocss'
+import { defineConfig, presetUno, transformerVariantGroup } from 'unocss'
 
 export default defineConfig({
   presets: [
-    presetMini(), // base
+    presetUno(), // base
     wmlPreset({
       autoRem: {
         pcCompatible: true,

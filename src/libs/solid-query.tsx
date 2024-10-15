@@ -14,18 +14,18 @@ const queryClient = new QueryClient({
     },
   },
 })
+// // 目前来说 缓存到本地 问题较多
+// if (!isServer) {
+//   // 服务器上不需要持久缓存
+//   const localStoragePersister = createSyncStoragePersister({
+//     storage: window.localStorage, // 空间不够可以用 https://github.com/jakearchibald/idb-keyval  https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient#building-a-persister
+//   })
 
-if (!isServer) {
-  // 服务器上不需要持久缓存
-  const localStoragePersister = createSyncStoragePersister({
-    storage: window.localStorage, // 空间不够可以用 https://github.com/jakearchibald/idb-keyval  https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient#building-a-persister
-  })
-
-  persistQueryClient({
-    queryClient,
-    persister: localStoragePersister,
-  })
-}
+//   persistQueryClient({
+//     queryClient,
+//     persister: localStoragePersister,
+//   })
+// }
 
 /**
  * doc https://tanstack.com/query/latest/docs/framework/solid/overview

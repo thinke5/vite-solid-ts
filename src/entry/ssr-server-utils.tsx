@@ -1,10 +1,10 @@
+import type { AssetHtmlTag } from '@ssrx/vite/runtime'
 /* eslint-disable ts/ban-ts-comment */
 // @ts-ignore
 import fs from 'node:fs'
 // @ts-ignore
 import path from 'node:path'
 import { Dynamic, isServer } from 'solid-js/web'
-import type { AssetHtmlTag } from '@ssrx/vite/runtime'
 
 let base = import.meta.env.BASE_URL
 switch (base) {
@@ -32,4 +32,11 @@ export function renderAssets(assets: AssetHtmlTag[], insertStyleToHTML = false) 
     }
     return <Dynamic $ServerOnly={!['link'].includes(asset.tag)} component={asset.tag} {...asset.attrs} />
   })
+}
+
+/** legacy-polyfills */
+export async function renderPolyfillAssets() {
+  const client_manifest = fs.readFileSync(path.resolve('./dist/client-manifest.json')).toString()
+  const manifest = JSON.parse(client_manifest)
+  return <script $ServerOnly type="text/javascript" src={`${base}/${manifest['vite/legacy-polyfills'].file}`}></script>
 }

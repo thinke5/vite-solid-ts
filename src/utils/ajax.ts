@@ -65,11 +65,11 @@ const defKY = ky.create({
         const code = objGetFirstKeyValue(resData, 'code', 'err_code', 'errcode', 'errCode')
         const data = objGetFirstKeyValue(resData, 'data', 'content')
 
-        if (new Set([0, 200]).has(code)) { // 成功请求，直接返回数据
-          return new Response(JSON.stringify(data), { status: code })
+        if ([0, 200].includes(code)) { // 成功请求，直接返回数据
+          return new Response(JSON.stringify(data), { status: 200 })
         }
         else { // 失败请求，包装成MyResponse对象
-          const message = objGetFirstKeyValue(resData, 'msg', 'message')
+          const message = objGetFirstKeyValue(resData, 'msg', 'message', 'livecenter')
           const traceId = objGetFirstKeyValue(resData, 'trace_id', 'traceId')
           return new MyResponse(response, { code, message, data, traceId })
         }
@@ -150,15 +150,15 @@ interface MyOptions extends Options {
  *
  * Object=>`application/json` ; FormData=>`multipart/form-data`; URLSearchParams=>`application/x-www-form-urlencoded`
  */
-export function POST(path: Input, data: ReqJson | FormData | URLSearchParams = {}, options?: MyOptions) {
+export function POST<T = any>(path: Input, data: ReqJson | FormData | URLSearchParams = {}, options?: MyOptions) {
   if (data instanceof FormData || data instanceof URLSearchParams)
-    return defKY.post(path, { body: data, ...options })
+    return defKY.post<T>(path, { body: data, ...options })
 
-  return defKY.post(path, { json: data, ...options })
+  return defKY.post<T>(path, { json: data, ...options })
 }
 /** 发起GET请求 */
-export function GET(path: Input, data: ReqJson | URLSearchParams, options?: MyOptions) {
-  return defKY.get(path, { searchParams: new URLSearchParams(data), ...options })
+export function GET<T = any>(path: Input, data: ReqJson | URLSearchParams, options?: MyOptions) {
+  return defKY.get<T>(path, { searchParams: new URLSearchParams(data), ...options })
 }
 
 interface ReqJson { [key: string | number]: any }
