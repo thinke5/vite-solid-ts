@@ -1,6 +1,7 @@
-import { ErrorBoundary, HydrationScript, NoHydration } from 'solid-js/web'
 import type { RouteDefinition } from '@solidjs/router'
 import type { JSX } from 'solid-js'
+import { ErrorBoundary, HydrationScript, NoHydration } from 'solid-js/web'
+import { errorLog, reportEvent } from '~/libs/TAM'
 import App from '../app'
 
 interface AppProps {
@@ -41,6 +42,8 @@ export function HTML(props: AppProps) {
           <ErrorBoundary fallback={(error) => {
             console.log('ErrorBoundary error =>\n', error)
 
+            reportEvent(`捕获错误`, error.message)
+            errorLog(error)
             return <span>error</span>
           }}
           >

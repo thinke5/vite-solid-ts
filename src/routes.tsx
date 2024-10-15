@@ -9,20 +9,13 @@ export async function ayncRouters() {
       // async: true,
       insertStyleToHTML: true,
       path: '/',
-      component: await lazyKeepAlive(() => import('./pages/demo/index')),
+      component: await lazyCom(() => import('./pages/demo/index')),
     },
     {
       path: '/demo',
       component: await lazyKeepAlive(() => import('./pages/demo/ssr')),
     },
-    {
-      path: '/demo2',
-      component: await lazyKeepAlive(() => import('./pages/demo/ssr')),
-    },
-    {
-      path: '/devSetting',
-      component: await lazyCom(() => import('./pages/devSetting/index')),
-    },
+
     // -------------------------------------------------------------
     {
       path: '*p404',
@@ -31,10 +24,10 @@ export async function ayncRouters() {
   ]
   if (isRDM || isDEV) {
     // 测试开关页面，正式环境不开启
-    list.push({
-      path: '/devSetting',
-      component: await lazyCom(() => import('./pages/devSetting/index')),
-    })
+    // list.push({
+    //   path: '/devSetting',
+    //   component: await lazyCom(() => import('./pages/devSetting/index')),
+    // })
   }
   return list
 }

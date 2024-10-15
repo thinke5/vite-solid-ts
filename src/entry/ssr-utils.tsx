@@ -1,6 +1,6 @@
+import type { JSX } from 'solid-js'
 import { lazy } from 'solid-js'
 import { isServer } from 'solid-js/web'
-import type { JSX } from 'solid-js'
 import { KeepAlive } from '~/libs/keepAlive'
 
 /** 增强lazy，可以在server直接加载lazy compont */

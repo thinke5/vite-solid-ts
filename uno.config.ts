@@ -10,9 +10,12 @@ export default defineConfig({
         designWidth: 375,
         expectFontSize: 16,
       },
-    }), // 预设 & 移动rem兼容 && pc适配
+    }) as any, // 预设 & 移动rem兼容 && pc适配
   ],
   transformers: [
     transformerVariantGroup(), // text-(16 red)
   ],
+  theme: {
+    colors: {},
+  },
 })

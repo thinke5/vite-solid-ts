@@ -1,3 +1,6 @@
+import type { BarSeriesOption, LineSeriesOption } from 'echarts/charts'
+import type { GridComponentOption } from 'echarts/components'
+import type { ComposeOption } from 'echarts/core'
 import { BarChart, LineChart } from 'echarts/charts'
 import {
   // DatasetComponent,
@@ -7,9 +10,6 @@ import {
 } from 'echarts/components'
 import * as echarts from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
-import type { BarSeriesOption, LineSeriesOption } from 'echarts/charts'
-import type { GridComponentOption } from 'echarts/components'
-import type { ComposeOption } from 'echarts/core'
 
 // 注册必须的组件
 echarts.use([

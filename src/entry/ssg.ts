@@ -1,3 +1,4 @@
+import type { IAyncRoute } from '../routes'
 /* eslint-disable no-console */
 /* eslint-disable node/prefer-global/process */
 /* eslint-disable ts/ban-ts-comment */
@@ -9,7 +10,6 @@ import { renderToString, renderToStringAsync } from 'solid-js/web'
 import { RouteBasePah } from '../config'
 import { ayncRouters } from '../routes'
 import { render } from './ssr-server'
-import type { IAyncRoute } from '../routes'
 
 /** 按路由预渲染html */
 export default async function server() {

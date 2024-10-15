@@ -1,8 +1,8 @@
+import type { Input, Options } from 'ky'
 import { error as toastError } from '@thinke/toast'
 import ky, { HTTPError } from 'ky'
-import type { Input, Options } from 'ky'
-import { appDevConfig } from '~/libs/appDevConfig'
-import { BASEURL, isDEV, isRDM } from '../config'
+// import { appDevConfig } from '~/libs/appDevConfig'
+import { BASEURL } from '../config'
 import { nextTick } from './index'
 
 const myErrStatus = 499
@@ -16,17 +16,9 @@ async function getAuthParam() {
     token: 'TOKEN',
   }
 
-  let mockAuthParam = {}
-  if (isRDM || isDEV) {
-    if (appDevConfig.mockAuthParam.enable) {
-      mockAuthParam = appDevConfig.mockAuthParam.value
-    }
-  }
-
   return {
     bodyParam: {
       ...bodyParam,
-      ...mockAuthParam,
     },
     headerParam,
   }

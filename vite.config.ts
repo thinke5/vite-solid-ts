@@ -1,3 +1,4 @@
+import type { PluginOption } from 'vite'
 /* eslint-disable ts/ban-ts-comment */
 // @ts-expect-error
 import { dirname, resolve } from 'node:path'
@@ -9,7 +10,6 @@ import unocss from 'unocss/vite'
 import { defineConfig, loadEnv } from 'vite'
 import solid from 'vite-plugin-solid'
 import tsconfigPaths from 'vite-tsconfig-paths'
-import type { PluginOption } from 'vite'
 
 // @ts-expect-error
 // eslint-disable-next-line node/prefer-global/process
@@ -47,10 +47,8 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
         serverFile: 'src/entry/ssg.ts',
       }),
 
-      // isBuild && isCI && vite_plugin_dns_prefetch(['https://xxxxx.com']), // DNS 加速 - 按需填写域名，一般只用填api的域名 如：['https://xxxxx.com']
       isBuild && !isCI && (await import('rollup-plugin-visualizer').then(p => p.visualizer))(), // 包体积分析 - 按需开启
       isBuild && (await import('@vitejs/plugin-legacy').then(p => p.default))({ targets: 'android>=73, ios>=13.1,not ie>0', modernPolyfills: true, renderLegacyChunks: false }), // 低版本浏览器兼容 - 按需开启
-      // mode === 'rdm' && isCI && vite_plugin_vconsole(), // vConsole - 按需开启
 
     ],
     build: {
@@ -77,31 +75,3 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
     },
   }
 })
-
-/** 移动端调试 @link https://github.com/Tencent/vConsole */
-function vite_plugin_vconsole() {
-  return {
-    name: 'add-vConsole',
-    apply: 'build',
-    transformIndexHtml(html) {
-      return html.replace('<!-- vConsole -->', `<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script><script> var vConsole = new window.VConsole(); </script>`)
-    },
-  } as PluginOption
-}
-
-/**
- * DNS-prefetch 尝试在请求资源之前解析域名, 仅对跨源域上的 DNS 查找有效
- * @link https://developer.mozilla.org/zh-CN/docs/Web/Performance/dns-prefetch
- */
-function vite_plugin_dns_prefetch(hosts: string[]) {
-  if (hosts.length === 0) {
-    return null
-  }
-  return {
-    name: 'vite_plugin_dns_prefetch',
-    apply: 'build',
-    transformIndexHtml(html) {
-      return html.replace('<head>', `<head>${hosts.map(h => `<link rel="preconnect" href="${h}" crossorigin />\n<link rel="dns-prefetch" href="${h}"/>`).join('\n')}`)
-    },
-  } as PluginOption
-}

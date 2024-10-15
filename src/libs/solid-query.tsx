@@ -1,11 +1,11 @@
+import type { JSX } from 'solid-js'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { persistQueryClient } from '@tanstack/solid-query-persist-client'
-import { type JSX, lazy, Show, Suspense } from 'solid-js'
 import { isServer } from 'solid-js/web'
-import { appDevConfig } from './appDevConfig'
+// import { appDevConfig } from './appDevConfig'
 
-const SolidQueryDevtools = lazy(() => import('@tanstack/solid-query-devtools').then(m => ({ default: m.SolidQueryDevtools })))
+// const SolidQueryDevtools = lazy(() => import('@tanstack/solid-query-devtools').then(m => ({ default: m.SolidQueryDevtools })))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,9 +33,9 @@ const queryClient = new QueryClient({
 export default function SolidQuery(props: { children: JSX.Element }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <Show when={!isServer && appDevConfig?.solidQueryDevtools}>
+      {/* <Show when={!isServer && appDevConfig?.solidQueryDevtools}>
         <Suspense><SolidQueryDevtools /></Suspense>
-      </Show>
+      </Show> */}
       {props.children}
     </QueryClientProvider>
   )

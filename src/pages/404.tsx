@@ -1,5 +1,5 @@
-import { A, useParams } from '@solidjs/router'
 import type { Component } from 'solid-js'
+import { A, useParams } from '@solidjs/router'
 
 export interface Page404Props {}
 /**  404 组件 */
