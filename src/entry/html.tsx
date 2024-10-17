@@ -23,7 +23,7 @@ export function HTML(props: AppProps) {
 
           <HydrationScript />
           {/* TAM监控 */}
-          {/* <script type="text/javascript" src="https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js" crossOrigin="anonymous"></script>
+          {/* <script type="text/javascript" src="https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js" crossorigin="anonymous"></script>
           <script>
             {`window.$$tam_aegis = new window.Aegis(${JSON.stringify({
               id: 'pGUVFTCZyewxxxxx', // 项目上报id
