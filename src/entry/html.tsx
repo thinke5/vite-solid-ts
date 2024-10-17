@@ -13,7 +13,7 @@ interface AppProps {
 /** HTML 模版 */
 export function HTML(props: AppProps) {
   return (
-    <html lang="zh">
+    <html lang="zh-CN">
       <head>
         <meta charset="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
