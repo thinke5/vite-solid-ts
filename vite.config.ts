@@ -51,6 +51,11 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
       isBuild && (await import('@vitejs/plugin-legacy').then(p => p.default))({ targets: 'android>=73, ios>=13.1,not ie>0', modernPolyfills: true, renderLegacyChunks: false }), // 低版本浏览器兼容 - 按需开启
 
     ],
+    css: {
+      postcss: {
+        plugins: [postcss_plugin_rpx2var()],
+      },
+    },
     build: {
       target: isSsrBuild ? ['esnext'] : undefined, // ['chrome64', 'safari11.1'],
     },
@@ -75,3 +80,22 @@ export default defineConfig(async ({ command, mode, isSsrBuild }) => {
     },
   }
 })
+
+/** 将css文件里的`rpx`单位转为 `calc(var(--rpx)*$1)` 以适配移动端 */
+function postcss_plugin_rpx2var() {
+  let isExcludeFile = false
+  return {
+    postcssPlugin: 'postcss-plugin-rpx2var',
+    Once(css) {
+      const filePath = css.source.input.file
+      isExcludeFile = filePath.includes('js-unocss-hash.css') // 排除unocss生成的文件
+    },
+    Declaration(decl) {
+      if (isExcludeFile)
+        return
+      if (decl.value.includes('rpx')) {
+        decl.value = decl.value.replace(/([\d.]+)rpx/g, 'calc(var(--rpx)*$1)')
+      }
+    },
+  }
+}
